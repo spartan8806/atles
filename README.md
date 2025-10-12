@@ -21,7 +21,7 @@ atles/
 └── 📋 .gitignore         # Git configuration
 ```
 
-## 🤖 AI Models
+##  AI Models
 
 ATLES manages multiple state-of-the-art AI models:
 
@@ -76,7 +76,7 @@ Curated code snippets from open-source repositories:
 - **Community Solutions**: Popular implementations
 - **Code Quality**: Well-documented, tested examples
 
-## 🗄️ Data Management
+##  Data Management
 
 ### **Memory System** (`memory/`)
 - **SQLite Database**: Persistent storage for system state
@@ -88,7 +88,7 @@ Curated code snippets from open-source repositories:
 - **Performance**: Reduce repeated computations
 - **Memory Management**: Efficient resource utilization
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### **Prerequisites**
 - Python 3.8+
@@ -123,7 +123,7 @@ This repository contains the **data layer** of the ATLES system:
 
 > **Note**: This appears to be the **storage/data repository** for ATLES. The main application logic, brain modules, and user interfaces may be in a separate repository.
 
-## 📊 Dataset Structure
+## Dataset Structure
 
 ### **Example: Programming Books Entry**
 ```json
@@ -173,7 +173,7 @@ This repository contains the **data layer** of the ATLES system:
 - **Concept Mapping**: Tagged and categorized content
 - **Real-world Examples**: Production-quality code samples
 
-### **🤖 AI Model Management**
+### ** AI Model Management**
 - **Multi-model Support**: Various model sizes and capabilities
 - **Metadata Tracking**: Download status and performance metrics
 - **Efficient Storage**: Optimized for large model files
@@ -183,7 +183,7 @@ This repository contains the **data layer** of the ATLES system:
 - **Search Optimization**: Tagged and scored content
 - **Scalable Structure**: Easy to extend and modify
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
 - **Model Integration**: Direct model loading and inference
 - **Web Interface**: Browser-based access to datasets
@@ -191,18 +191,6 @@ This repository contains the **data layer** of the ATLES system:
 - **Learning Analytics**: Progress tracking and recommendations
 - **Collaborative Features**: Community contributions and sharing
 
-## 📄 License
 
-[Specify your license here]
-
-## 🤝 Contributing
-
-[Add contribution guidelines here]
-
-## 📞 Support
-
-[Add support information here]
-
----
 
 **ATLES**: Empowering advanced technical learning through AI and structured knowledge management.
