@@ -725,18 +725,3 @@ print(f"Model Count: {len(status['available_models'])}")
 - **Learning Analytics**: Progress tracking and recommendations
 - **Collaborative Features**: Community contributions and sharing
 
-## 📄 License
-
-[Specify your license here]
-
-## 🤝 Contributing
-
-[Add contribution guidelines here]
-
-## 📞 Support
-
-[Add support information here]
-
----
-
-**ATLES**: Empowering advanced technical learning through AI and structured knowledge management.
