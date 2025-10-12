@@ -1,0 +1,101 @@
+[
+  {
+    "id": "fastapi_basic_crud",
+    "framework": "FastAPI",
+    "version": "0.104.0",
+    "category": "api",
+    "language": "python",
+    "title": "Basic CRUD Operations with FastAPI",
+    "description": "Create, read, update, and delete operations using FastAPI with Pydantic models",
+    "code": "from fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nfrom typing import List, Optional\nimport uvicorn\n\napp = FastAPI(title=\"User Management API\")\n\n# Pydantic model for User\nclass User(BaseModel):\n    id: Optional[int] = None\n    name: str\n    email: str\n    age: int\n\n# In-memory storage (replace with database in production)\nusers_db = []\nuser_id_counter = 1\n\n@app.post(\"/users/\", response_model=User)\nasync def create_user(user: User):\n    global user_id_counter\n    user.id = user_id_counter\n    user_id_counter += 1\n    users_db.append(user)\n    return user\n\n@app.get(\"/users/\", response_model=List[User])\nasync def get_users():\n    return users_db\n\n@app.get(\"/users/{user_id}\", response_model=User)\nasync def get_user(user_id: int):\n    for user in users_db:\n        if user.id == user_id:\n            return user\n    raise HTTPException(status_code=404, detail=\"User not found\")\n\n@app.put(\"/users/{user_id}\", response_model=User)\nasync def update_user(user_id: int, user_update: User):\n    for i, user in enumerate(users_db):\n        if user.id == user_id:\n            user_update.id = user_id\n            users_db[i] = user_update\n            return user_update\n    raise HTTPException(status_code=404, detail=\"User not found\")\n\n@app.delete(\"/users/{user_id}\")\nasync def delete_user(user_id: int):\n    for i, user in enumerate(users_db):\n        if user.id == user_id:\n            del users_db[i]\n            return {\"message\": \"User deleted successfully\"}\n    raise HTTPException(status_code=404, detail=\"User not found\")\n\nif __name__ == \"__main__\":\n    uvicorn.run(app, host=\"0.0.0.0\", port=8000)",
+    "api_endpoint": "/users/",
+    "parameters": [
+      {
+        "name": "user",
+        "type": "User",
+        "description": "User data to create"
+      },
+      {
+        "name": "user_id",
+        "type": "int",
+        "description": "User ID for operations"
+      }
+    ],
+    "return_value": "User object or list of users",
+    "dependencies": [
+      "fastapi",
+      "pydantic",
+      "uvicorn"
+    ],
+    "tags": [
+      "python",
+      "fastapi",
+      "api",
+      "crud",
+      "pydantic"
+    ],
+    "difficulty": "intermediate",
+    "relevance_score": 0.95
+  },
+  {
+    "id": "react_hooks_state_management",
+    "framework": "React",
+    "version": "18.2.0",
+    "category": "state-management",
+    "language": "javascript",
+    "title": "State Management with React Hooks",
+    "description": "Managing complex state using useState, useEffect, and custom hooks",
+    "code": "import React, { useState, useEffect, useCallback } from 'react';\n\n// Custom hook for managing form state\nfunction useForm(initialState) {\n    const [values, setValues] = useState(initialState);\n    const [errors, setErrors] = useState({});\n    const [isSubmitting, setIsSubmitting] = useState(false);\n\n    const handleChange = useCallback((e) => {\n        const { name, value } = e.target;\n        setValues(prev => ({\n            ...prev,\n            [name]: value\n        }));\n        \n        // Clear error when user starts typing\n        if (errors[name]) {\n            setErrors(prev => ({\n                ...prev,\n                [name]: ''\n            }));\n        }\n    }, [errors]);\n\n    const handleSubmit = useCallback(async (onSubmit) => {\n        setIsSubmitting(true);\n        try {\n            await onSubmit(values);\n            setValues(initialState);\n        } catch (error) {\n            console.error('Form submission error:', error);\n        } finally {\n            setIsSubmitting(false);\n        }\n    }, [values, initialState]);\n\n    return {\n        values,\n        errors,\n        isSubmitting,\n        handleChange,\n        handleSubmit,\n        setErrors\n    };\n}\n\n// Example form component\nfunction UserForm() {\n    const { values, errors, isSubmitting, handleChange, handleSubmit } = useForm({\n        name: '',\n        email: '',\n        age: ''\n    });\n\n    const onSubmit = async (formData) => {\n        // Simulate API call\n        await new Promise(resolve => setTimeout(resolve, 1000));\n        console.log('Form submitted:', formData);\n    };\n\n    return (\n        <form onSubmit={(e) => {\n            e.preventDefault();\n            handleSubmit(onSubmit);\n        }}>\n            <div>\n                <label>Name:</label>\n                <input\n                    type=\"text\"\n                    name=\"name\"\n                    value={values.name}\n                    onChange={handleChange}\n                />\n                {errors.name && <span className=\"error\">{errors.name}</span>}\n            </div>\n            \n            <div>\n                <label>Email:</label>\n                <input\n                    type=\"email\"\n                    name=\"email\"\n                    value={values.email}\n                    onChange={handleChange}\n                />\n                {errors.email && <span className=\"error\">{errors.email}</span>}\n            </div>\n            \n            <div>\n                <label>Age:</label>\n                <input\n                    type=\"number\"\n                    name=\"age\"\n                    value={values.age}\n                    onChange={handleChange}\n                />\n                {errors.age && <span className=\"error\">{errors.age}</span>}\n            </div>\n            \n            <button type=\"submit\" disabled={isSubmitting}>\n                {isSubmitting ? 'Submitting...' : 'Submit'}\n            </button>\n        </form>\n    );\n}\n\nexport default UserForm;",
+    "api_endpoint": null,
+    "parameters": [
+      {
+        "name": "initialState",
+        "type": "object",
+        "description": "Initial form state"
+      },
+      {
+        "name": "onSubmit",
+        "type": "function",
+        "description": "Form submission handler"
+      }
+    ],
+    "return_value": "Form state and handlers object",
+    "dependencies": [
+      "react"
+    ],
+    "tags": [
+      "javascript",
+      "react",
+      "hooks",
+      "state-management",
+      "forms"
+    ],
+    "difficulty": "intermediate",
+    "relevance_score": 0.92
+  },
+  {
+    "id": "django_orm_queries",
+    "framework": "Django",
+    "version": "4.2.0",
+    "category": "database",
+    "language": "python",
+    "title": "Advanced Django ORM Queries",
+    "description": "Complex database queries using Django ORM with annotations, aggregations, and select_related",
+    "code": "from django.db import models\nfrom django.db.models import Q, F, Count, Avg, Sum, Case, When, Value\nfrom django.contrib.auth.models import User\n\n# Example models\nclass Category(models.Model):\n    name = models.CharField(max_length=100)\n    description = models.TextField(blank=True)\n    \n    def __str__(self):\n        return self.name\n\nclass Product(models.Model):\n    name = models.CharField(max_length=200)\n    category = models.ForeignKey(Category, on_delete=models.CASCADE)\n    price = models.DecimalField(max_digits=10, decimal_places=2)\n    stock = models.IntegerField(default=0)\n    is_active = models.BooleanField(default=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    \n    def __str__(self):\n        return self.name\n\nclass Order(models.Model):\n    STATUS_CHOICES = [\n        ('pending', 'Pending'),\n        ('processing', 'Processing'),\n        ('shipped', 'Shipped'),\n        ('delivered', 'Delivered'),\n        ('cancelled', 'Cancelled'),\n    ]\n    \n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    products = models.ManyToManyField(Product, through='OrderItem')\n    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')\n    total_amount = models.DecimalField(max_digits=10, decimal_places=2)\n    created_at = models.DateTimeField(auto_now_add=True)\n    \n    def __str__(self):\n        return f\"Order {self.id} by {self.user.username}\"\n\nclass OrderItem(models.Model):\n    order = models.ForeignKey(Order, on_delete=models.CASCADE)\n    product = models.ForeignKey(Product, on_delete=models.CASCADE)\n    quantity = models.IntegerField()\n    price = models.DecimalField(max_digits=10, decimal_places=2)\n\n# Advanced ORM queries\ndef advanced_queries():\n    # 1. Annotate with calculated fields\n    products_with_stats = Product.objects.annotate(\n        total_orders=Count('orderitem'),\n        avg_quantity=Avg('orderitem__quantity'),\n        revenue=Sum(F('orderitem__quantity') * F('orderitem__price'))\n    ).filter(is_active=True)\n    \n    # 2. Complex filtering with Q objects\n    popular_products = Product.objects.filter(\n        Q(stock__gt=0) & \n        Q(price__lte=100) &\n        (Q(category__name='Electronics') | Q(category__name='Books'))\n    ).annotate(\n        order_count=Count('orderitem')\n    ).filter(order_count__gte=5)\n    \n    # 3. Conditional annotations\n    products_with_status = Product.objects.annotate(\n        stock_status=Case(\n            When(stock__gt=10, then=Value('In Stock')),\n            When(stock__gt=0, then=Value('Low Stock')),\n            default=Value('Out of Stock')\n        )\n    )\n    \n    # 4. Select related to avoid N+1 queries\n    orders_with_details = Order.objects.select_related('user').prefetch_related(\n        'products', 'orderitem_set__product'\n    ).filter(status__in=['pending', 'processing'])\n    \n    # 5. Aggregations by category\n    category_stats = Category.objects.annotate(\n        product_count=Count('product'),\n        avg_price=Avg('product__price'),\n        total_stock=Sum('product__stock')\n    ).filter(product_count__gt=0)\n    \n    return {\n        'products_with_stats': list(products_with_stats),\n        'popular_products': list(popular_products),\n        'products_with_status': list(products_with_status),\n        'orders_with_details': list(orders_with_details),\n        'category_stats': list(category_stats)\n    }\n\n# Usage example\nif __name__ == \"__main__\":\n    # This would be run in Django shell or view\n    results = advanced_queries()\n    for key, value in results.items():\n        print(f\"\\n{key}:\")\n        for item in value[:3]:  # Show first 3 items\n            print(f\"  - {item}\")",
+    "api_endpoint": null,
+    "parameters": [],
+    "return_value": "Dictionary with query results",
+    "dependencies": [
+      "django"
+    ],
+    "tags": [
+      "python",
+      "django",
+      "orm",
+      "database",
+      "queries"
+    ],
+    "difficulty": "advanced",
+    "relevance_score": 0.88
+  }
+]

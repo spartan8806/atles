@@ -1,0 +1,140 @@
+[
+  {
+    "id": "two_sum",
+    "title": "Two Sum",
+    "description": "Find two numbers in an array that add up to a target value",
+    "difficulty": "easy",
+    "category": "arrays",
+    "language": "python",
+    "problem_statement": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
+    "constraints": [
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Only one valid answer exists"
+    ],
+    "examples": [
+      {
+        "input": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9
+        },
+        "output": [
+          0,
+          1
+        ],
+        "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+      },
+      {
+        "input": {
+          "nums": [
+            3,
+            2,
+            4
+          ],
+          "target": 6
+        },
+        "output": [
+          1,
+          2
+        ],
+        "explanation": "Because nums[1] + nums[2] == 6, we return [1, 2]."
+      }
+    ],
+    "solution": "def two_sum(nums, target):\n    # Use a hash map to store complements\n    seen = {}\n    \n    for i, num in enumerate(nums):\n        complement = target - num\n        \n        # If complement exists, we found our pair\n        if complement in seen:\n            return [seen[complement], i]\n        \n        # Store current number and its index\n        seen[num] = i\n    \n    return []  # No solution found\n\n# Test cases\nnums1 = [2, 7, 11, 15]\ntarget1 = 9\nprint(two_sum(nums1, target1))  # [0, 1]\n\nnums2 = [3, 2, 4]\ntarget2 = 6\nprint(two_sum(nums2, target2))  # [1, 2]",
+    "explanation": "The optimal solution uses a hash map to achieve O(n) time complexity. For each number, we check if its complement (target - current_number) exists in our hash map. If it does, we've found our pair. If not, we store the current number and its index for future lookups.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "arrays",
+      "hash-table",
+      "two-pointers",
+      "easy"
+    ],
+    "source": "leetcode",
+    "relevance_score": 0.95
+  },
+  {
+    "id": "valid_parentheses",
+    "title": "Valid Parentheses",
+    "description": "Check if a string of parentheses is valid",
+    "difficulty": "easy",
+    "category": "stacks",
+    "language": "python",
+    "problem_statement": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid. An input string is valid if: 1) Open brackets must be closed by the same type of brackets. 2) Open brackets must be closed in the correct order.",
+    "constraints": [
+      "1 <= s.length <= 10^4",
+      "s consists of parentheses only '()[]{}'"
+    ],
+    "examples": [
+      {
+        "input": {
+          "s": "()"
+        },
+        "output": true,
+        "explanation": "Simple valid parentheses."
+      },
+      {
+        "input": {
+          "s": "([)]"
+        },
+        "output": false,
+        "explanation": "Brackets are not closed in the correct order."
+      }
+    ],
+    "solution": "def is_valid_parentheses(s):\n    # Use stack to keep track of opening brackets\n    stack = []\n    \n    # Map closing brackets to their corresponding opening brackets\n    bracket_map = {')': '(', '}': '{', ']': '['}\n    \n    for char in s:\n        # If it's an opening bracket, push to stack\n        if char in '({[':\n            stack.append(char)\n        # If it's a closing bracket, check if it matches the top of stack\n        elif char in ')}]':\n            if not stack or stack.pop() != bracket_map[char]:\n                return False\n    \n    # Stack should be empty if all brackets are properly closed\n    return len(stack) == 0\n\n# Test cases\ntest_cases = [\"()\", \"()[]{}\", \"(]\", \"([)]\", \"{[]}\"]\nfor test in test_cases:\n    result = is_valid_parentheses(test)\n    print(f\"'{test}' -> {result}\")",
+    "explanation": "This problem is a classic stack application. We use a stack to keep track of opening brackets. When we encounter a closing bracket, we check if it matches the most recent opening bracket (top of stack). If they don't match or if the stack is empty, the string is invalid.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "stack",
+      "string",
+      "easy"
+    ],
+    "source": "leetcode",
+    "relevance_score": 0.9
+  },
+  {
+    "id": "binary_tree_inorder_traversal",
+    "title": "Binary Tree Inorder Traversal",
+    "description": "Traverse a binary tree in inorder fashion",
+    "difficulty": "medium",
+    "category": "trees",
+    "language": "python",
+    "problem_statement": "Given the root of a binary tree, return the inorder traversal of its nodes' values. Inorder traversal visits nodes in the order: left subtree, root, right subtree.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [0, 100]",
+      "-100 <= Node.val <= 100"
+    ],
+    "examples": [
+      {
+        "input": {
+          "root": "[1,null,2,3]"
+        },
+        "output": [
+          1,
+          3,
+          2
+        ],
+        "explanation": "Inorder traversal: left subtree (empty), root (1), right subtree (3, 2)."
+      }
+    ],
+    "solution": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef inorder_traversal_recursive(root):\n    # Recursive solution\n    result = []\n    \n    def inorder(node):\n        if node:\n            inorder(node.left)      # Visit left subtree\n            result.append(node.val) # Visit root\n            inorder(node.right)     # Visit right subtree\n    \n    inorder(root)\n    return result\n\ndef inorder_traversal_iterative(root):\n    # Iterative solution using stack\n    result = []\n    stack = []\n    current = root\n    \n    while current or stack:\n        # Go to the leftmost node\n        while current:\n            stack.append(current)\n            current = current.left\n        \n        # Process current node\n        current = stack.pop()\n        result.append(current.val)\n        \n        # Move to right subtree\n        current = current.right\n    \n    return result\n\n# Create sample tree: [1,null,2,3]\nroot = TreeNode(1)\nroot.right = TreeNode(2)\nroot.right.left = TreeNode(3)\n\nprint(\"Recursive:\", inorder_traversal_recursive(root))\nprint(\"Iterative:\", inorder_traversal_iterative(root))",
+    "explanation": "Inorder traversal visits nodes in the order: left subtree, root, right subtree. The recursive solution is straightforward and mirrors the definition. The iterative solution uses a stack to simulate the recursive call stack, going as far left as possible before processing nodes.",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "stack",
+      "medium"
+    ],
+    "source": "leetcode",
+    "relevance_score": 0.85
+  }
+]

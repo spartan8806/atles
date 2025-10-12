@@ -1,0 +1,25 @@
+# Large model files - exclude actual model data but keep metadata
+models/*/models--*/**/*.safetensors
+models/*/models--*/**/*.bin
+models/*/models--*/**/*.model
+models/*/models--*/**/pytorch_model.bin
+models/*/models--*/**/model-*.safetensors
+
+# Keep info.json files and small config files
+!models/*/info.json
+!models/*/models--*/**/*.json
+!models/*/models--*/**/*.txt
+
+# Cache directory
+cache/
+
+# Memory database (if it contains sensitive data)
+# memory/memory.db
+
+# Log files
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

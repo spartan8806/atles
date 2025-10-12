@@ -1,0 +1,102 @@
+[
+  {
+    "id": "design_patterns_singleton",
+    "book_title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+    "author": "Gang of Four",
+    "chapter": "Creational Patterns",
+    "section": "Singleton Pattern",
+    "language": "python",
+    "code": "class Singleton:\n    _instance = None\n    \n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n            cls._instance._initialized = False\n        return cls._instance\n    \n    def __init__(self):\n        if not self._initialized:\n            self._initialized = True\n            # Initialize your singleton here\n            self.data = []\n    \n    def add_data(self, item):\n        self.data.append(item)\n    \n    def get_data(self):\n        return self.data.copy()\n\n# Usage\nsingleton1 = Singleton()\nsingleton1.add_data(\"First item\")\n\nsingleton2 = Singleton()\nsingleton2.add_data(\"Second item\")\n\nprint(singleton1 is singleton2)  # True\nprint(singleton1.get_data())     # ['First item', 'Second item']",
+    "description": "Singleton design pattern implementation in Python",
+    "concepts": [
+      "design-patterns",
+      "singleton",
+      "creational-patterns",
+      "object-oriented"
+    ],
+    "difficulty": "intermediate",
+    "tags": [
+      "python",
+      "design-patterns",
+      "singleton",
+      "oop",
+      "best-practices"
+    ],
+    "relevance_score": 0.95
+  },
+  {
+    "id": "clean_code_functions",
+    "book_title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+    "author": "Robert C. Martin",
+    "chapter": "Functions",
+    "section": "Function Naming",
+    "language": "python",
+    "code": "# Bad: Unclear function name and purpose\ndef process(data):\n    result = []\n    for item in data:\n        if item > 0:\n            result.append(item * 2)\n    return result\n\n# Good: Clear, descriptive function name\ndef filter_and_double_positive_numbers(numbers):\n    # Filter positive numbers and double them\n    # Args: numbers - List of numbers to process\n    # Returns: List of doubled positive numbers\n    positive_numbers = [num for num in numbers if num > 0]\n    doubled_numbers = [num * 2 for num in positive_numbers]\n    return doubled_numbers\n\n# Usage example\nnumbers = [-1, 2, -3, 4, 5]\nresult = filter_and_double_positive_numbers(numbers)\nprint(result)  # [4, 8, 10]",
+    "description": "Clean code principles for function naming and structure",
+    "concepts": [
+      "clean-code",
+      "function-design",
+      "naming-conventions",
+      "readability"
+    ],
+    "difficulty": "beginner",
+    "tags": [
+      "python",
+      "clean-code",
+      "functions",
+      "naming",
+      "best-practices"
+    ],
+    "relevance_score": 0.92
+  },
+  {
+    "id": "effective_python_comprehensions",
+    "book_title": "Effective Python: 90 Specific Ways to Write Better Python",
+    "author": "Brett Slatkin",
+    "chapter": "Comprehensions and Generators",
+    "section": "List Comprehensions",
+    "language": "python",
+    "code": "# Bad: Traditional for loop approach\ndef get_squares_of_evens(numbers):\n    squares = []\n    for num in numbers:\n        if num % 2 == 0:\n            squares.append(num ** 2)\n    return squares\n\n# Good: List comprehension approach\ndef get_squares_of_evens(numbers):\n    return [num ** 2 for num in numbers if num % 2 == 0]\n\n# Even better: Generator expression for memory efficiency\ndef get_squares_of_evens_generator(numbers):\n    return (num ** 2 for num in numbers if num % 2 == 0)\n\n# Usage examples\nnumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n# List comprehension\nsquares_list = get_squares_of_evens(numbers)\nprint(list(squares_list))  # [4, 16, 36, 64, 100]\n\n# Generator expression\nsquares_gen = get_squares_of_evens_generator(numbers)\nfor square in squares_gen:\n    print(square, end=' ')  # 4 16 36 64 100",
+    "description": "Effective use of list comprehensions and generator expressions",
+    "concepts": [
+      "list-comprehensions",
+      "generators",
+      "pythonic-code",
+      "memory-efficiency"
+    ],
+    "difficulty": "intermediate",
+    "tags": [
+      "python",
+      "comprehensions",
+      "generators",
+      "efficiency",
+      "best-practices"
+    ],
+    "relevance_score": 0.88
+  },
+  {
+    "id": "refactoring_extract_method",
+    "book_title": "Refactoring: Improving the Design of Existing Code",
+    "author": "Martin Fowler",
+    "chapter": "Composing Methods",
+    "section": "Extract Method",
+    "language": "python",
+    "code": "# Before: Long method with multiple responsibilities\ndef print_owing(amount):\n    print(\"*************************\")\n    print(\"**** Customer Owes ******\")\n    print(\"*************************\")\n    \n    # Calculate outstanding amount\n    outstanding = amount * 1.2\n    \n    # Print details\n    print(f\"name: {self.name}\")\n    print(f\"amount: {amount}\")\n    print(f\"outstanding: {outstanding}\")\n\n# After: Extracted methods with single responsibilities\ndef print_owing(self, amount):\n    self._print_banner()\n    outstanding = self._calculate_outstanding(amount)\n    self._print_details(amount, outstanding)\n\ndef _print_banner(self):\n    print(\"*************************\")\n    print(\"**** Customer Owes ******\")\n    print(\"*************************\")\n\ndef _calculate_outstanding(self, amount):\n    return amount * 1.2\n\ndef _print_details(self, amount, outstanding):\n    print(f\"name: {self.name}\")\n    print(f\"amount: {amount}\")\n    print(f\"outstanding: {outstanding}\")\n\n# Benefits:\n# 1. Each method has a single responsibility\n# 2. Methods are easier to test individually\n# 3. Code is more readable and maintainable\n# 4. Methods can be reused elsewhere",
+    "description": "Refactoring technique: Extract Method for better code organization",
+    "concepts": [
+      "refactoring",
+      "extract-method",
+      "single-responsibility",
+      "code-organization"
+    ],
+    "difficulty": "intermediate",
+    "tags": [
+      "python",
+      "refactoring",
+      "methods",
+      "clean-code",
+      "best-practices"
+    ],
+    "relevance_score": 0.9
+  }
+]

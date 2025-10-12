@@ -1,0 +1,61 @@
+[
+  {
+    "id": "python_flask_rest_api",
+    "repository": "pallets/flask",
+    "file_path": "examples/rest_api.py",
+    "language": "python",
+    "code": "from flask import Flask, request, jsonify\nfrom flask_restful import Api, Resource\n\napp = Flask(__name__)\napi = Api(app)\n\nclass UserAPI(Resource):\n    def get(self, user_id):\n        # Get user by ID\n        user = get_user_by_id(user_id)\n        if user:\n            return jsonify(user)\n        return {'message': 'User not found'}, 404\n    \n    def post(self):\n        # Create new user\n        data = request.get_json()\n        user = create_user(data)\n        return jsonify(user), 201\n\napi.add_resource(UserAPI, '/users', '/users/<int:user_id>')\n\nif __name__ == '__main__':\n    app.run(debug=True)",
+    "description": "Flask REST API example with user management",
+    "tags": [
+      "python",
+      "flask",
+      "rest-api",
+      "web-development"
+    ],
+    "stars": 65000,
+    "forks": 15000,
+    "last_updated": "2024-01-15T10:30:00Z",
+    "url": "https://github.com/pallets/flask",
+    "relevance_score": 0.95
+  },
+  {
+    "id": "javascript_react_hooks",
+    "repository": "facebook/react",
+    "file_path": "examples/hooks/custom_hook.js",
+    "language": "javascript",
+    "code": "import { useState, useEffect } from 'react';\n\n// Custom hook for API calls\nfunction useApi(url) {\n    const [data, setData] = useState(null);\n    const [loading, setLoading] = useState(true);\n    const [error, setError] = useState(null);\n\n    useEffect(() => {\n        const fetchData = async () => {\n            try {\n                setLoading(true);\n                const response = await fetch(url);\n                const result = await response.json();\n                setData(result);\n            } catch (err) {\n                setError(err);\n            } finally {\n                setLoading(false);\n            }\n        };\n\n        fetchData();\n    }, [url]);\n\n    return { data, loading, error };\n}\n\nexport default useApi;",
+    "description": "React custom hook for API calls with loading states",
+    "tags": [
+      "javascript",
+      "react",
+      "hooks",
+      "api",
+      "frontend"
+    ],
+    "stars": 200000,
+    "forks": 40000,
+    "last_updated": "2024-01-20T14:15:00Z",
+    "url": "https://github.com/facebook/react",
+    "relevance_score": 0.92
+  },
+  {
+    "id": "python_pandas_data_analysis",
+    "repository": "pandas-dev/pandas",
+    "file_path": "examples/data_analysis.py",
+    "language": "python",
+    "code": "import pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\n\n# Load data\ndf = pd.read_csv('sales_data.csv')\n\n# Data cleaning\ndf['date'] = pd.to_datetime(df['date'])\ndf = df.dropna()\n\n# Group by month and calculate metrics\nmonthly_sales = df.groupby(df['date'].dt.to_period('M')).agg({\n    'sales': ['sum', 'mean', 'count'],\n    'profit': 'sum'\n}).round(2)\n\n# Create visualization\nplt.figure(figsize=(12, 6))\nmonthly_sales['sales']['sum'].plot(kind='bar')\nplt.title('Monthly Sales Trend')\nplt.xlabel('Month')\nplt.ylabel('Total Sales')\nplt.xticks(rotation=45)\nplt.tight_layout()\nplt.show()\n\nprint(\"Monthly Sales Summary:\")\nprint(monthly_sales)",
+    "description": "Pandas data analysis example with sales data",
+    "tags": [
+      "python",
+      "pandas",
+      "data-analysis",
+      "visualization",
+      "data-science"
+    ],
+    "stars": 35000,
+    "forks": 15000,
+    "last_updated": "2024-01-18T09:45:00Z",
+    "url": "https://github.com/pandas-dev/pandas",
+    "relevance_score": 0.88
+  }
+]
