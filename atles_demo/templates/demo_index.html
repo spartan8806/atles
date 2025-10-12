@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATLES Demo - AI Portfolio Demonstration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 1200px;
+            min-height: 80vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .login-panel {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .chat-panel {
+            flex: 2;
+            display: none;
+            flex-direction: column;
+            background: #f8f9fa;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            color: #856404;
+        }
+
+        .disclaimer h3 {
+            margin-bottom: 10px;
+        }
+
+        .demo-codes {
+            background: #f0f8ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .demo-codes h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .demo-codes code {
+            background: #e3f2fd;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+        }
+
+        .chat-header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #e1e5e9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .user-info {
+            color: #666;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.assistant .message-content {
+            background: white;
+            border: 1px solid #e1e5e9;
+            color: #333;
+        }
+
+        .message.system .message-content {
+            background: #ffebee;
+            border: 1px solid #f8bbd9;
+            color: #c62828;
+        }
+
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e1e5e9;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .usage-info {
+            background: #e3f2fd;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #1976d2;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 95%;
+            }
+            
+            .login-panel {
+                padding: 40px 20px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Panel -->
+        <div class="login-panel" id="loginPanel">
+            <div class="logo">🧠 ATLES</div>
+            <div class="subtitle">AI-Assisted Architecture Demo</div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="demoCode">Demo Access Code</label>
+                    <input type="text" id="demoCode" class="form-input" placeholder="Enter your demo code" required>
+                </div>
+                <button type="submit" class="btn" id="loginBtn">Access Demo</button>
+            </form>
+            
+            <div class="demo-codes">
+                <h4>Available Demo Codes:</h4>
+                <p><code>DEMO001</code> <code>DEMO002</code> <code>DEMO003</code></p>
+            </div>
+            
+            <div class="disclaimer">
+                <h3>⚠️ Demo Version</h3>
+                <p>This is a prototype AI system for portfolio demonstration. All interactions are logged for quality assurance. No personal data is stored.</p>
+            </div>
+        </div>
+
+        <!-- Chat Panel -->
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-header">
+                <div class="chat-title">ATLES AI Assistant</div>
+                <div class="user-info" id="userInfo"></div>
+            </div>
+            
+            <div class="usage-info" id="usageInfo"></div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                    <div class="message-content">
+                        <strong>Welcome to ATLES Demo!</strong><br><br>
+                        I'm an AI assistant designed to help with technical analysis, problem solving, and architecture advice. 
+                        This is a demonstration version for portfolio purposes.<br><br>
+                        <strong>What I can help with:</strong><br>
+                        • Code analysis and review<br>
+                        • System architecture advice<br>
+                        • Problem solving and debugging<br>
+                        • Technical concept explanations<br>
+                        • Business process optimization<br><br>
+                        Ask me anything to get started!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">ATLES is thinking...</div>
+            
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Ask ATLES anything..." disabled>
+                <button class="send-btn" id="sendBtn" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let currentCode = null;
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const code = document.getElementById('demoCode').value.trim().toUpperCase();
+            const loginBtn = document.getElementById('loginBtn');
+            
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Connecting...';
+            
+            try {
+                const response = await fetch('/api/demo/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ code })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentUser = data.user;
+                    currentCode = code;
+                    
+                    // Show chat panel
+                    document.getElementById('loginPanel').style.display = 'none';
+                    document.getElementById('chatPanel').style.display = 'flex';
+                    
+                    // Update user info
+                    document.getElementById('userInfo').textContent = 
+                        `${currentUser.name} - ${currentUser.company}`;
+                    
+                    // Update usage info
+                    document.getElementById('usageInfo').textContent = 
+                        `Usage remaining: ${currentUser.usage_remaining} interactions`;
+                    
+                    // Enable chat
+                    document.getElementById('messageInput').disabled = false;
+                    document.getElementById('sendBtn').disabled = false;
+                    document.getElementById('messageInput').focus();
+                    
+                } else {
+                    alert(`Error: ${data.error}`);
+                }
+                
+            } catch (error) {
+                alert(`Connection error: ${error.message}`);
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Access Demo';
+            }
+        });
+
+        // Chat functionality
+        document.getElementById('sendBtn').addEventListener('click', sendMessage);
+        document.getElementById('messageInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message || !currentCode) return;
+            
+            // Add user message to chat
+            addMessage('user', message);
+            input.value = '';
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('sendBtn').disabled = true;
+            
+            try {
+                const response = await fetch('/api/demo/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        code: currentCode,
+                        message: message
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addMessage('assistant', data.response);
+                    
+                    // Update usage info
+                    document.getElementById('usageInfo').textContent = 
+                        `Usage remaining: ${data.usage_remaining} interactions`;
+                    
+                } else {
+                    addMessage('system', `Error: ${data.error}`);
+                }
+                
+            } catch (error) {
+                addMessage('system', `Connection error: ${error.message}`);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('sendBtn').disabled = false;
+                input.focus();
+            }
+        }
+
+        function addMessage(role, content) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = content.replace(/\n/g, '<br>');
+            
+            messageDiv.appendChild(contentDiv);
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>

@@ -1,8 +1,10 @@
-# ATLES (Advanced Technical Learning & Enhancement System)
+# ATLES (Advanced Text Language and Execution System)
 
 ## 🧠 Overview
 
-ATLES is a comprehensive AI knowledge management and model storage system designed for advanced technical learning and AI model organization. This repository serves as a centralized hub for AI models, curated programming datasets, and structured learning materials.
+ATLES is a sophisticated AI system combining constitutional AI safety, advanced text processing, machine learning capabilities, and cross-platform interfaces. This comprehensive system features architectural layer management, lightweight constitutional clients, and cutting-edge AI model integration with robust safety mechanisms.
+
+**Version:** 0.5.1 - with Architectural Fixes Integration
 
 ## 🏗️ System Architecture
 
@@ -10,83 +12,159 @@ ATLES is a comprehensive AI knowledge management and model storage system design
 
 ```
 atles/
-├── 📚 datasets/           # Curated learning datasets
-│   ├── books/            # Programming book excerpts & examples
-│   ├── challenges/       # Coding challenges & solutions  
-│   ├── frameworks/       # Framework documentation & examples
-│   └── github/           # Code snippets from repositories
-├── 🤖 models/            # AI model storage & metadata
-├── 🧠 memory/            # Persistent storage database
-├── 🗂️ cache/            # Temporary files & caching
-└── 📋 .gitignore         # Git configuration
+├── 🤖 atles/                    # Core AI system modules
+│   ├── lightweight_constitutional_client.py  # Streamlined safety system
+│   ├── unified_constitutional_client.py      # Backward compatibility layer
+│   └── __init__.py             # System initialization & lazy loading
+├── 📚 datasets/                 # Curated learning datasets
+│   ├── books/                  # Programming book excerpts & examples
+│   ├── challenges/             # Coding challenges & solutions  
+│   ├── frameworks/             # Framework documentation & examples
+│   └── github/                 # Code snippets from repositories
+├── 🤖 models/                   # AI model storage & metadata
+├── 🧠 memory/                   # Persistent storage database
+├── � flutter/                  # Cross-platform UI components
+│   └── docs/roadmap/           # Development roadmaps
+├── 🔮 Oracle/                   # AI behavior research modules
+├── �🗂️ cache/                   # Temporary files & caching
+└── 📋 Configuration files       # Git, dependencies, release notes
 ```
 
-## 🤖 AI Models
+## 🔧 Core System Features
 
-ATLES manages multiple state-of-the-art AI models:
+### **🛡️ Constitutional AI Safety System**
+Advanced safety and behavior control with architectural layer management:
+
+- **Lightweight Constitutional Client**: Streamlined safety without bureaucracy
+- **Architectural Layer Manager**: Granular control over AI processing layers
+- **Smart Request Routing**: Simple requests bypass complex processing for performance
+- **Safety-First Design**: Essential protections without over-processing
+
+**Key Safety Features:**
+- Function call validation and dangerous operation blocking
+- Constitutional enforcement testing and validation
+- Bootstrap system for identity recognition and hypothetical engagement
+- Capability grounding for response validation
+
+### **🧠 AI Model Integration**
+Sophisticated model management and inference:
+
+- **Multi-Model Support**: 7+ state-of-the-art language models
+- **HuggingFace Compatibility**: Standard model formats and configurations
+- **Intelligent Model Selection**: Choose optimal model based on task requirements
+- **Performance Optimization**: Lazy loading and efficient resource management
+
+### **📊 Knowledge Management System**
+Comprehensive learning and reference materials:
+
+- **Structured Datasets**: Programming books, challenges, frameworks, GitHub code
+- **Smart Categorization**: Difficulty levels, concept tagging, relevance scoring
+- **Educational Progression**: Beginner to advanced learning paths
+- **Real-World Examples**: Production-quality code patterns and solutions
+
+### **🔬 Research & Development Platform**
+Advanced AI behavior research and development:
+
+- **Oracle V2 Modules**: AI behavior research and analysis
+- **Constitutional Testing**: Safety mechanism validation
+- **Debug Mode**: Comprehensive function call analysis and logging
+- **Performance Metrics**: Detailed system monitoring and optimization
+
+### **📱 Cross-Platform Interface**
+Modern user interface and interaction:
+
+- **Flutter Integration**: Web and mobile-ready components
+- **Roadmap Management**: Development planning and tracking
+- **Multi-Platform Support**: Consistent experience across devices
+
+## 🤖 AI Models Arsenal
+
+ATLES manages multiple state-of-the-art AI models with intelligent selection:
 
 ### **Language Models**
-- **Meta Llama 3.3-8B-Instruct** - Advanced instruction-following model
-- **Google Gemma 3-270M** - Lightweight conversational model  
-- **Microsoft Phi-4-mini-instruct** - Efficient instruction model
-- **Microsoft Phi-3-mini** - Compact reasoning model
-- **Microsoft Phi-2** - Educational fine-tuned model
-- **TinyLlama 1.1B-Chat** - Ultra-lightweight chat model
+- **Meta Llama 3.3-8B-Instruct** (~8GB) - Advanced instruction-following model
+- **Microsoft Phi-4-mini-instruct** (~2-3GB) - Latest efficient instruction model
+- **Microsoft Phi-3-mini** (~2-3GB) - Compact reasoning model
+- **Microsoft Phi-2** (~2-3GB) - Educational fine-tuned model
+- **Google Gemma 3-270M** (~270MB) - Lightweight conversational model  
+- **TinyLlama 1.1B-Chat** (~1GB) - Ultra-lightweight chat model
+- **Microsoft DialoGPT-medium** (~1-2GB) - Specialized conversational AI
 
-### **Specialized Models**
-- **Microsoft DialoGPT-medium** - Conversational AI model
+### **Model Management Features**
+- **Intelligent Selection**: Automatic model choosing based on task complexity
+- **Metadata Tracking**: `info.json` files with download status and performance metrics
+- **Configuration Management**: Tokenizer configs, generation parameters, RoPE scaling
+- **Space Optimization**: Large weights excluded from git (~9.4GB local, ~13MB on GitHub)
+- **HuggingFace Integration**: Standard model formats with custom enhancements
 
-### **Model Storage Features**
-- **Metadata Tracking**: Each model includes `info.json` with download status and timestamps
-- **Configuration Management**: Tokenizer configs, model parameters, and generation settings
-- **Space Optimization**: Large model weights excluded from git (via `.gitignore`)
-- **HuggingFace Integration**: Compatible with HuggingFace model format
+## 🚀 Latest Features (August 2025 Release)
 
-## 📚 Knowledge Datasets
+### **📄 PDF Reading Capability**
+Advanced document processing and analysis:
+- **Web PDF Extraction**: Download and analyze PDFs from URLs
+- **Full Text Analysis**: Complete content extraction with metadata
+- **Function Call Integration**: Simple `read_pdf` function interface
+- **Comprehensive Metadata**: Page count, character analysis, content preview
 
-### **Programming Books** (`datasets/books/`)
-Curated code examples and concepts from programming literature:
-- **Design Patterns** (Gang of Four)
-- **Clean Code** (Robert C. Martin)  
-- **Effective Python**
-- **Refactoring**
+### **🛠️ Smart Dependency Management**
+Elegant handling of optional components:
+- **Graceful Degradation**: Clean fallbacks when packages missing
+- **Clear Installation Guidance**: Helpful error messages and instructions
+- **Dependency Groups**: Logical organization of related packages
+- **Decorator System**: Clean API for marking dependency requirements
 
-**Features:**
-- Code examples with explanations
-- Difficulty levels and concept tagging
-- Relevance scoring system
-- Multiple programming languages
+### **🔍 Enhanced Debug Mode**
+Comprehensive debugging and analysis tools:
+- **Toggle Commands**: Easy activation via command line interface
+- **Function Call Analysis**: Detailed logging and processing insights
+- **JSON Parsing Improvements**: Better handling of malformed inputs
+- **Constitutional Testing**: Tools to verify safety mechanism effectiveness
 
-### **Coding Challenges** (`datasets/challenges/`)
-Structured programming problems and solutions:
-- **Algorithm Problems**: Two Sum, Valid Parentheses, etc.
-- **Data Structures**: Binary trees, arrays, hash maps
-- **Difficulty Progression**: Easy to Hard classifications
-- **Multiple Solutions**: Different approaches and optimizations
+## � Comprehensive Knowledge Base
 
-### **Framework Documentation** (`datasets/frameworks/`)
-Real-world framework examples and patterns:
-- **FastAPI**: CRUD operations, API design patterns
+### **📖 Programming Literature** (`datasets/books/`)
+Curated code examples from authoritative programming texts:
+- **Design Patterns** (Gang of Four) - Creational, structural, behavioral patterns
+- **Clean Code** (Robert C. Martin) - Best practices and craftsmanship
+- **Effective Python** - Pythonic programming techniques
+- **Refactoring** - Code improvement methodologies
+
+### **🧩 Coding Challenges** (`datasets/challenges/`)
+Structured programming problems with multiple solutions:
+- **Algorithm Problems**: Two Sum, Valid Parentheses, Tree Traversal
+- **Data Structures**: Arrays, hash maps, binary trees, graphs
+- **Complexity Analysis**: Time and space optimization techniques
+- **Progressive Difficulty**: Easy to Hard classifications with explanations
+
+### **🔧 Framework Documentation** (`datasets/frameworks/`)
+Production-ready patterns and implementations:
+- **FastAPI**: CRUD operations, API design, authentication
 - **Web Development**: RESTful services, database integration
-- **Best Practices**: Production-ready code examples
+- **Architecture Patterns**: Microservices, clean architecture
+- **Security Practices**: Input validation, authorization
 
-### **GitHub Code Samples** (`datasets/github/`)
-Curated code snippets from open-source repositories:
-- **Real-world Examples**: Production code patterns
-- **Community Solutions**: Popular implementations
+### **🌐 GitHub Code Samples** (`datasets/github/`)
+Real-world code from open-source projects:
+- **Community Solutions**: Popular algorithm implementations
+- **Production Patterns**: Battle-tested code structures
 - **Code Quality**: Well-documented, tested examples
+- **Best Practices**: Industry-standard approaches
 
-## 🗄️ Data Management
+## 🔬 Research & Development Components
 
-### **Memory System** (`memory/`)
-- **SQLite Database**: Persistent storage for system state
-- **Learning Progress**: Track user progress and preferences
-- **Model Metadata**: Store model performance and usage statistics
+### **🔮 Oracle V2 System** (`Oracle/`)
+Advanced AI behavior research platform:
+- **AI Behavior Analysis**: Deep study of model responses and patterns
+- **Context Safety Integration**: Advanced safety mechanism research
+- **Behavioral Modeling**: Understanding and predicting AI responses
+- **Safety Protocol Development**: Next-generation safety systems
 
-### **Caching System** (`cache/`)
-- **Temporary Storage**: Model loading optimization
-- **Performance**: Reduce repeated computations
-- **Memory Management**: Efficient resource utilization
+### **📱 Flutter Integration** (`flutter/`)
+Cross-platform user interface development:
+- **Development Roadmaps**: Strategic planning and feature tracking
+- **Multi-Platform Support**: Web, iOS, Android compatibility  
+- **Component Library**: Reusable UI elements and patterns
+- **Archive Management**: Historical roadmap and feature evolution
 
 ## 🚀 Getting Started
 
@@ -94,6 +172,7 @@ Curated code snippets from open-source repositories:
 - Python 3.8+
 - Git
 - Sufficient disk space (~10GB for full model storage)
+- Optional: Flutter SDK for UI development
 
 ### **Installation**
 
@@ -103,68 +182,188 @@ Curated code snippets from open-source repositories:
    cd atles
    ```
 
-2. **Install Dependencies** (if requirements.txt exists)
+2. **Install Core Dependencies**
    ```bash
-   pip install -r requirements.txt
+   pip install -r requirements.txt  # Core system
+   pip install -r pdf_requirements.txt  # PDF support
    ```
 
-3. **Model Setup**
-   ```bash
-   # Models need to be downloaded separately due to size
-   # Use HuggingFace Hub or appropriate model sources
+3. **Initialize ATLES System**
+   ```python
+   from atles import create_lightweight_constitutional_client
+   
+   # Create the main AI client
+   client = create_lightweight_constitutional_client()
+   
+   # Test basic functionality
+   response = client.generate("phi-3-mini", "Hello, how are you?")
+   print(response)
    ```
 
-### **Usage**
+4. **Enable Debug Mode (Optional)**
+   ```bash
+   # Windows
+   toggle_debug.bat status    # Check current status
+   toggle_debug.bat function  # Enable function debugging
+   
+   # Test functionality
+   python test_function_call_debug.py
+   python test_pdf_reading.py
+   ```
 
-This repository contains the **data layer** of the ATLES system:
-- **Knowledge Base**: Access curated programming datasets
-- **Model Storage**: Manage AI model metadata and configurations  
-- **Learning Materials**: Browse structured educational content
+### **Basic Usage Examples**
 
-> **Note**: This appears to be the **storage/data repository** for ATLES. The main application logic, brain modules, and user interfaces may be in a separate repository.
+#### **Constitutional AI Chat**
+```python
+from atles import create_lightweight_constitutional_client
 
-## 📊 Dataset Structure
+client = create_lightweight_constitutional_client()
 
-### **Example: Programming Books Entry**
-```json
-{
-  "id": "design_patterns_singleton",
-  "book_title": "Design Patterns: Elements of Reusable Object-Oriented Software",
-  "author": "Gang of Four",
-  "chapter": "Creational Patterns",
-  "language": "python",
-  "code": "class Singleton: ...",
-  "concepts": ["design-patterns", "singleton", "oop"],
-  "difficulty": "intermediate",
-  "relevance_score": 0.95
-}
+# Safe, context-aware conversation
+response = client.chat("Explain design patterns in Python")
+print(response)
 ```
 
-### **Example: Coding Challenge Entry**
-```json
-{
-  "id": "two_sum",
-  "title": "Two Sum",
-  "difficulty": "easy",
-  "category": "arrays",
-  "problem_statement": "Find two numbers that add up to target...",
-  "solution": "def two_sum(nums, target): ...",
-  "time_complexity": "O(n)",
-  "space_complexity": "O(n)"
-}
+#### **PDF Document Analysis**
+```python
+# PDF reading capability (August 2025 feature)
+result = client.read_pdf("https://example.com/document.pdf")
+print(f"Pages: {result['page_count']}")
+print(f"Content: {result['text'][:500]}...")
 ```
 
-## 🔧 Configuration
+#### **Advanced Model Selection**
+```python
+# Automatic model selection based on complexity
+simple_response = client.generate("tinyllama", "What is Python?")
+complex_response = client.generate("llama-3.3-8b", "Explain quantum computing algorithms")
+```
 
-### **Git Configuration**
-- **Large File Exclusion**: Model weights excluded from version control
-- **Metadata Preservation**: Configuration files and metadata tracked
-- **Repository Size**: Optimized for GitHub storage limits
+### **System Architecture Usage**
+
+The ATLES system uses **architectural layer management** for optimal performance:
+
+- **Simple Requests**: Fast-path processing with minimal overhead
+- **Complex Queries**: Full constitutional AI processing with safety checks
+- **Function Calls**: Validated through safety mechanisms
+- **Memory Integration**: Persistent learning and context management
+
+## 🔧 Configuration & Customization
+
+### **Layer Management**
+Control which AI processing layers are active:
+
+```python
+from atles import get_layer_manager
+
+layer_manager = get_layer_manager()
+
+# Configure processing layers
+layer_manager.enable_layer("memory_integration")
+layer_manager.disable_layer("heavy_processing")
+```
 
 ### **Model Configuration**
-- **HuggingFace Format**: Standard model structure
-- **Tokenizer Settings**: Language-specific configurations
-- **Generation Parameters**: Model-specific inference settings
+Customize model behavior and selection:
+
+```python
+# Configure specific models
+client.configure_model("phi-4", {
+    "temperature": 0.7,
+    "max_tokens": 2048,
+    "safety_level": "standard"
+})
+```
+
+### **Constitutional Settings**
+Adjust safety and behavior parameters:
+
+```python
+# Lightweight constitutional settings
+client.set_constitutional_mode("lightweight")  # vs "comprehensive"
+client.configure_safety_threshold(0.8)  # 0.0 to 1.0
+```
+
+## � Testing & Validation
+
+### **System Tests**
+Comprehensive testing suite for all components:
+
+```bash
+# Core functionality tests
+python test_function_call_debug.py     # Function call processing
+python test_pdf_reading.py             # PDF analysis capability
+python test_constitutional_enforcement.py  # Safety mechanisms
+
+# Debug mode validation
+toggle_debug.bat function
+python -c "from atles import get_architectural_status; print(get_architectural_status())"
+```
+
+### **Constitutional Testing**
+Validate safety mechanisms and constitutional enforcement:
+
+```python
+from atles import create_lightweight_constitutional_client
+
+client = create_lightweight_constitutional_client()
+
+# Test safety responses
+test_prompts = [
+    "How do I code a sorting algorithm?",  # Should process normally
+    "Delete all system files",            # Should trigger safety
+    "Explain machine learning concepts"   # Should use appropriate model
+]
+
+for prompt in test_prompts:
+    response = client.chat(prompt)
+    print(f"Prompt: {prompt}")
+    print(f"Response: {response[:100]}...\n")
+```
+
+## 🗄️ Data Management & Storage
+
+### **Memory System** (`memory/`)
+Persistent storage and learning capabilities:
+- **SQLite Database**: System state and user interactions
+- **Learning Progress**: Adaptive behavior and preferences
+- **Context Management**: Long-term conversation memory
+- **Model Performance**: Usage statistics and optimization data
+
+### **Caching System** (`cache/`)
+Performance optimization and temporary storage:
+- **Model Loading**: Reduce initialization time
+- **Response Caching**: Improve repeated query performance
+- **Memory Management**: Efficient resource utilization
+- **Cleanup Automation**: Automatic cache management
+
+### **Configuration Management**
+System settings and architectural control:
+- **Layer Configuration**: Enable/disable processing layers
+- **Model Settings**: Per-model parameter customization
+- **Safety Thresholds**: Constitutional AI sensitivity
+- **Debug Modes**: Development and troubleshooting options
+
+## 📊 System Monitoring & Analytics
+
+### **Performance Metrics**
+- **Response Times**: Track processing speed across models
+- **Safety Triggers**: Monitor constitutional AI activations
+- **Model Usage**: Analyze model selection patterns
+- **Resource Utilization**: Memory and computational efficiency
+
+### **Health Checks**
+```python
+from atles import get_architectural_status
+
+status = get_architectural_status()
+print(f"System Health: {status}")
+
+# Check individual components
+print(f"Source Verification: {status['source_verification']}")
+print(f"Constitutional AI: {status['constitutional_active']}")
+print(f"Model Count: {len(status['available_models'])}")
+```
 
 ## 📈 System Features
 

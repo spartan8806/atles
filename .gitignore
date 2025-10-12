@@ -10,16 +10,55 @@ models/*/models--*/**/model-*.safetensors
 !models/*/models--*/**/*.json
 !models/*/models--*/**/*.txt
 
-# Cache directory
+# Cache directories
 cache/
+.pytest_cache/
+__pycache__/
 
-# Memory database (if it contains sensitive data)
-# memory/memory.db
+# Build directories
+build/
+.dart_tool/
 
 # Log files
 *.log
+autonomous_logs/
+BACKUP_autonomous_logs_*/
 
-# Python cache
-__pycache__/
+# Generated documents
+generated_docs/
+atles_generated_documents/
+
+# Temporary model directories (downloaded models)
+codegemma-2b/
+embeddinggemma-300m/
+gemma-3-270m/
+Phi-3-mini-4k-instruct/
+model_surgery_backups/
+
+# Performance data
+router_performance_data/
+
+# Memory database (if it contains sensitive data)
+# memory/memory.db
+demo_memory/
+atles_memory/
+desktop_user/
+
+# Test directories with potentially large files
+test_books/
+test_challenges/
+test_conversations/
+test_frameworks/
+test_github/
+test_user/
+
+# Development files
+.vscode/
 *.pyc
 *.pyo
+
+# System communication logs
+atles_system_communication/
+
+# Visualizations (may contain large files)
+visualizations/

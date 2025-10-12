@@ -1,0 +1,115 @@
+{
+  "router_test": {
+    "test_count": 5,
+    "test_delay": 0.5,
+    "enable_comprehensive_testing": true,
+    "test_all_task_types": true
+  },
+  "logging": {
+    "request_max_length": 30,
+    "include_confidence_scores": true,
+    "include_reasoning": true,
+    "log_level": "INFO"
+  },
+  "ui": {
+    "router_test_button": {
+      "text": "🧠 Test Router Intelligence",
+      "bg_color": "#4CAF50",
+      "fg_color": "white",
+      "font": ["Arial", 10, "bold"],
+      "tooltip": "Test the Router Intelligence system with dynamic requests"
+    },
+    "router_status_display": {
+      "show_model_usage": true,
+      "show_confidence_scores": true,
+      "show_reasoning": false,
+      "update_interval": 1.0
+    }
+  },
+  "request_generation": {
+    "enable_dynamic_requests": true,
+    "max_requests_per_cycle": 3,
+    "request_generation_interval": 5.0,
+    "context_aware_generation": true,
+    "history_based_selection": true
+  },
+  "performance": {
+    "enable_monitoring": true,
+    "track_decision_accuracy": true,
+    "track_model_performance": true,
+    "generate_performance_reports": true,
+    "report_interval": 300
+  },
+  "safety": {
+    "max_concurrent_requests": 10,
+    "request_timeout": 30.0,
+    "enable_error_recovery": true,
+    "fallback_to_simulation": true,
+    "log_all_errors": true
+  },
+  "router_usage": {
+    "scope": "medium",
+    "intensity": "medium",
+    "scope_levels": {
+      "minimal": {"main_loop": 0.2, "goal_gen": 0.1, "goal_comp": 0.1, "analysis": 2},
+      "low": {"main_loop": 0.3, "goal_gen": 0.2, "goal_comp": 0.15, "analysis": 3},
+      "medium": {"main_loop": 0.6, "goal_gen": 0.4, "goal_comp": 0.3, "analysis": 5},
+      "high": {"main_loop": 0.8, "goal_gen": 0.6, "goal_comp": 0.5, "analysis": 8},
+      "maximum": {"main_loop": 0.9, "goal_gen": 0.8, "goal_comp": 0.7, "analysis": 12}
+    },
+    "intensity_levels": {
+      "gentle": {"delay_multiplier": 2.0, "max_concurrent": 10, "actions_per_min": 5},
+      "medium": {"delay_multiplier": 1.0, "max_concurrent": 25, "actions_per_min": 15},
+      "aggressive": {"delay_multiplier": 0.5, "max_concurrent": 50, "actions_per_min": 30},
+      "maximum": {"delay_multiplier": 0.2, "max_concurrent": 100, "actions_per_min": 60}
+    }
+  },
+  "context_values": {
+    "document_type": ["PDF", "text", "code", "log", "config", "markdown", "json", "xml"],
+    "content_type": ["data", "text", "code", "images", "audio", "video", "structured_data"],
+    "data_type": ["user_data", "system_data", "training_data", "test_data", "production_data"],
+    "text_type": ["query", "response", "document", "comment", "description", "summary"],
+    "topic": ["AI", "programming", "science", "technology", "business", "health", "education"],
+    "concept": ["machine learning", "algorithms", "data structures", "AI safety", "optimization"],
+    "problem_type": ["debugging", "optimization", "integration", "configuration", "performance"],
+    "subject": ["Python", "JavaScript", "databases", "networking", "security", "AI", "ML"],
+    "task_type": ["development", "testing", "deployment", "maintenance", "analysis", "research"],
+    "language": ["Python", "JavaScript", "Java", "C++", "Go", "Rust", "TypeScript"],
+    "functionality": ["sorting", "searching", "filtering", "validation", "transformation", "analysis"],
+    "action": ["process data", "validate input", "generate output", "transform format", "analyze patterns"],
+    "component_type": ["API", "service", "module", "class", "function", "library", "framework"],
+    "code_type": ["bug", "performance", "security", "compatibility", "maintainability"],
+    "algorithm_type": ["sorting", "searching", "optimization", "machine learning", "graph", "string"],
+    "reference": ["document", "code", "data", "pattern", "template", "example"],
+    "item1": ["file", "record", "entry", "item", "object", "entity"],
+    "item2": ["template", "example", "reference", "standard", "baseline", "benchmark"],
+    "pattern_type": ["usage", "error", "performance", "behavior", "access", "communication"],
+    "analysis_type": ["trends", "patterns", "anomalies", "performance", "quality", "efficiency"],
+    "feature_type": ["keywords", "entities", "sentiments", "topics", "categories", "attributes"],
+    "metric_type": ["accuracy", "speed", "memory", "reliability", "throughput", "latency"],
+    "quality_type": ["accuracy", "completeness", "consistency", "relevance", "clarity", "precision"],
+    "item_type": ["data", "code", "document", "response", "result", "output"],
+    "review_type": ["quality", "accuracy", "completeness", "clarity", "consistency", "relevance"],
+    "parameter_type": ["learning rate", "batch size", "timeout", "threshold", "weight", "bias"],
+    "goal_type": ["accuracy", "speed", "efficiency", "reliability", "scalability", "maintainability"],
+    "performance_type": ["speed", "memory", "accuracy", "throughput", "latency", "efficiency"],
+    "system_type": ["database", "API", "service", "algorithm", "model", "framework"],
+    "setting_type": ["configuration", "parameters", "options", "preferences", "flags", "switches"],
+    "outcome_type": ["performance", "accuracy", "efficiency", "reliability", "quality", "usability"],
+    "config_type": ["settings", "parameters", "options", "preferences", "flags", "switches"],
+    "target_type": ["accuracy", "speed", "efficiency", "scalability", "reliability", "maintainability"],
+    "memory_type": ["episodic", "semantic", "procedural", "working", "short-term", "long-term"],
+    "storage_type": ["database", "cache", "file", "memory", "disk", "cloud"],
+    "information_type": ["facts", "procedures", "concepts", "experiences", "rules", "patterns"],
+    "source_type": ["database", "cache", "file", "API", "service", "external"],
+    "record_type": ["user", "session", "transaction", "event", "log", "audit"],
+    "purpose_type": ["learning", "retrieval", "analysis", "optimization", "monitoring", "debugging"],
+    "retention_type": ["short-term", "long-term", "permanent", "temporary", "session", "persistent"],
+    "query_type": ["information", "data", "documents", "patterns", "records", "entities"],
+    "criteria_type": ["keywords", "filters", "conditions", "patterns", "rules", "constraints"],
+    "resource_type": ["file", "document", "data", "service", "API", "database"],
+    "attribute_type": ["name", "type", "size", "date", "status", "priority"],
+    "database_type": ["SQL", "NoSQL", "graph", "vector", "document", "key-value"],
+    "information_type": ["facts", "procedures", "concepts", "experiences", "rules", "patterns"]
+  }
+}
