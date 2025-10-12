@@ -38,11 +38,29 @@ model_surgery_backups/
 # Performance data
 router_performance_data/
 
-# Memory database (if it contains sensitive data)
-# memory/memory.db
+# Memory databases and personal data - CRITICAL: Never commit personal memories!
+memory/memory.db
+memory/*.db
 demo_memory/
 atles_memory/
 desktop_user/
+
+# Personal conversation and learning data
+conversation_memory*.json
+core_memory*.json
+learned_principles*.json
+semantic_index*.json
+session_summaries*.json
+user_preferences*.json
+checkpoint_*.json
+
+# Episodes and personal interaction logs
+episodes/
+backups/
+*_backup_*.json
+
+# Any .db files (SQLite databases may contain personal data)
+*.db
 
 # Test directories with potentially large files
 test_books/
