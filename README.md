@@ -33,6 +33,7 @@ atles/
 - **🧠 DNPG Neural Patterns** - Dynamic Neural Pattern Generation for memory-aware reasoning│   ├── unified_constitutional_client.py      # Backward compatibility layer
 
 - **📱 Multi-Platform Apps** - Native mobile and desktop applications│   └── __init__.py             # System initialization & lazy loading
+please note the mobile app more then likely wont work 
 
 - **🎯 Autonomous Systems** - Self-directed goal management and execution├── 📚 datasets/                 # Curated learning datasets
 
