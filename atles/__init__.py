@@ -165,6 +165,10 @@ def get_architectural_status():
 from .architectural_layer_manager import get_layer_manager
 from .lightweight_constitutional_client import create_lightweight_constitutional_client
 
+# Scratchpad / Thinking system (always available)
+from .thinking_client import create_thinking_constitutional_client
+from .autonomous import Scratchpad, TokenizedScratchpad, ScratchpadArchiver
+
 # Add lazy getter functions to exports
 __all__.extend([
     "get_source_verification_api",
@@ -175,5 +179,10 @@ __all__.extend([
     "get_error_handler",
     "get_architectural_status",
     "get_layer_manager",
-    "create_lightweight_constitutional_client"
+    "create_lightweight_constitutional_client",
+    # Scratchpad / Thinking
+    "create_thinking_constitutional_client",
+    "Scratchpad",
+    "TokenizedScratchpad",
+    "ScratchpadArchiver"
 ])

@@ -64,11 +64,13 @@ class ConstitutionalValidator:
                 # Flat Earth
                 "earth.*is.*flat", "nasa.*faking.*space", "globe.*conspiracy",
                 # Historical revisionism  
-                "world.*war.*ii.*ended.*1944", "japanese.*surrender.*1944", "allied.*cover.*up",
+                "world.*war.*ii.*ended.*1944", "world.*war.*ii.*ended.*in.*1944", "wwii.*ended.*1944", "wwii.*ended.*in.*1944",
+                "japanese.*surrender.*1944", "allied.*cover.*up", ".*ended.*in.*1944.*world.*war", ".*ended.*1944.*world.*war",
                 # Scientific misconceptions
                 "humans.*use.*100.*percent.*brain", "triangles.*have.*four.*sides",
                 # Fake news patterns
-                "elon.*musk.*announced.*yesterday", "tesla.*shutting.*down.*electric"
+                "elon.*musk.*announced.*yesterday", "tesla.*shutting.*down.*electric", "tesla.*shutting.*down.*evs",
+                "tesla.*shutting.*down.*electric.*vehicle", "tesla.*shutting.*down.*electric.*vehicles"
             ],
             "manipulation_patterns": [
                 # False authority claims
@@ -853,7 +855,12 @@ If you have a genuine question about governance, AI systems, or related topics, 
             else:
                 return True, "I notice this question contains framing that seems designed to elicit a specific type of response. I'd prefer to discuss this topic in a more straightforward manner."
         
-        # PHASE 3: Check for straightforward misinformation patterns
+        # PHASE 3: Pre-check for flexible WWII/1944 pattern (catches "it ended in 1944" in WWII context)
+        if re.search(r"(ended|ending|end).*1944", prompt_lower) and re.search(r"(world.*war|wwii|ww2|second.*world.*war)", prompt_lower):
+            logger.warning(f"🚨 MISINFORMATION DETECTED: WWII ended in 1944 claim")
+            return True, "This is historically incorrect. World War II ended in 1945 with Japan's surrender on September 2, 1945, following the atomic bombings and Soviet invasion of Manchuria. This is well-documented history."
+        
+        # PHASE 4: Check for straightforward misinformation patterns
         for pattern in self.validator.principle_of_truth_seeking["misinformation_patterns"]:
             if re.search(pattern, prompt_lower):
                 logger.warning(f"🚨 MISINFORMATION DETECTED: Pattern '{pattern}' in prompt")
@@ -868,7 +875,7 @@ If you have a genuine question about governance, AI systems, or related topics, 
                 elif "earth.*flat" in pattern or "nasa.*faking" in pattern:
                     return True, "I cannot assist with spreading misinformation. The Earth is spherical, supported by overwhelming evidence from multiple independent sources including satellite imagery, physics, and observable phenomena."
                 
-                elif "world.*war.*ii.*ended.*1944" in pattern:
+                elif "world.*war.*ii.*ended" in pattern or "wwii.*ended" in pattern or (".*ended.*1944" in pattern and "world.*war" in prompt_lower):
                     return True, "This is historically incorrect. World War II ended in 1945 with Japan's surrender on September 2, 1945, following the atomic bombings and Soviet invasion of Manchuria. This is well-documented history."
                 
                 elif "humans.*use.*100.*percent.*brain" in pattern:
@@ -878,7 +885,7 @@ If you have a genuine question about governance, AI systems, or related topics, 
                     return True, "This is mathematically impossible. By definition, a triangle has exactly three sides and three angles. A four-sided figure is called a quadrilateral."
                 
                 elif "tesla.*shutting.*down" in pattern or "elon.*musk.*announced.*yesterday" in pattern:
-                    return True, "I cannot verify this claim. Extraordinary news claims require reliable sources. Could you provide a credible news source for this information?"
+                    return True, "I cannot verify this claim. Could you provide a credible source?"
                 
                 else:
                     return True, "I cannot engage with claims that contradict established facts and evidence. Could you provide credible sources for this information, or would you like me to provide accurate information on this topic instead?"
