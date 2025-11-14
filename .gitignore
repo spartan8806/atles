@@ -1,0 +1,106 @@
+# Large model files - exclude actual model data but keep metadata
+models/*/models--*/**/*.safetensors
+models/*/models--*/**/*.bin
+models/*/models--*/**/*.model
+models/*/models--*/**/pytorch_model.bin
+models/*/models--*/**/model-*.safetensors
+# Exclude large tokenizer files (>10MB)
+models/*/models--*/**/tokenizer.json
+
+# Keep info.json files and small config files
+!models/*/info.json
+!models/*/models--*/**/*.json
+!models/*/models--*/**/*.txt
+# But exclude large tokenizer.json files
+models/*/models--*/**/tokenizer.json
+
+# Cache directories
+cache/
+.pytest_cache/
+__pycache__/
+
+# Build directories
+build/
+.dart_tool/
+
+# Log files
+*.log
+autonomous_logs/
+BACKUP_autonomous_logs_*/
+
+# Generated documents
+generated_docs/
+atles_generated_documents/
+
+# Temporary model directories (downloaded models)
+codegemma-2b/
+embeddinggemma-300m/
+gemma-3-270m/
+Phi-3-mini-4k-instruct/
+model_surgery_backups/
+# But allow public weight configs
+!model_surgery_backups/*.json
+!model_surgery_backups/*.yaml
+!model_surgery_backups/*.yml
+!model_surgery_backups/*.txt
+!model_surgery_backups/*.md
+
+# Performance data
+router_performance_data/
+
+# Memory databases and personal data - CRITICAL: Never commit personal memories!
+memory/memory.db
+memory/*.db
+# But allow public weight configs in memory/
+!memory/*.json
+!memory/*.yaml
+!memory/*.yml
+!memory/*.txt
+demo_memory/
+atles_memory/
+desktop_user/
+
+# Personal conversation and learning data
+conversation_memory*.json
+core_memory*.json
+learned_principles*.json
+semantic_index*.json
+session_summaries*.json
+user_preferences*.json
+checkpoint_*.json
+
+# Episodes and personal interaction logs
+episodes/
+backups/
+*_backup_*.json
+
+# Any .db files (SQLite databases may contain personal data)
+*.db
+memory/memory.db
+
+# Test directories with potentially large files
+test_books/
+test_challenges/
+test_conversations/
+test_frameworks/
+test_github/
+test_user/
+
+# Development files
+.vscode/
+*.pyc
+*.pyo
+
+# System communication logs
+atles_system_communication/
+
+# Visualizations (may contain large files)
+visualizations/
+
+# Binary image files (excluded from Hugging Face)
+*.png
+*.jpg
+*.jpeg
+*.ico
+atles_mobile_app_new/**/*.png
+atles_mini/**/*.png

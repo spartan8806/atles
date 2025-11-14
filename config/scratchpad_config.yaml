@@ -1,0 +1,111 @@
+# ATLES Scratchpad Configuration
+# Internal thinking system for multi-stage response generation
+# Note: ATLES uses external models (Qwen, etc.) so no training preparation needed
+
+scratchpad:
+  # Enable/disable scratchpad system
+  enabled: true
+  
+  # When to use scratchpad
+  # "every_response" - always think before responding (recommended)
+  # "complex_only" - only for complex queries
+  # "manual" - only when explicitly triggered
+  mode: "every_response"
+  
+  # Storage format
+  # "structured" - JSON with metadata (AI-optimized, good for analysis)
+  # "text" - plain text (human-readable but less efficient)
+  format: "structured"
+  
+  # Storage directories
+  storage:
+    active_dir: "atles_memory/scratchpad/active"
+    archive_dir: "atles_memory/scratchpad/archive"
+  
+  # Archival settings
+  archival:
+    # How often to archive
+    # "daily" - archive at startup if previous day has sessions
+    # "weekly" - archive once per week
+    # "manual" - only when explicitly triggered
+    frequency: "daily"
+    
+    # How many days of archives to keep
+    keep_days: 30
+    
+    # Extract key thoughts for analysis
+    extract_key_thoughts: true
+    
+    # Create human-readable summaries
+    create_summaries: true
+  
+  # Thinking process settings
+  thinking:
+    # Maximum number of revision attempts
+    max_revisions: 2
+    
+    # Enable self-critique stage
+    critique_enabled: true
+    
+    # Enable self-checking before finalizing
+    self_check_enabled: true
+    
+    # Minimum confidence to skip revision (0.0-1.0)
+    min_confidence: 0.8
+  
+  # Key thought detection
+  key_thought_detection:
+    # Automatically detect key thoughts
+    auto_detect: true
+    
+    # Criteria for marking as key thought
+    criteria:
+      # User explicitly corrected response
+      user_correction: true
+      
+      # AI revised response 2+ times
+      multiple_revisions: true
+      
+      # Response took longer than threshold (seconds)
+      long_response_time: 10.0
+      
+      # User gave positive feedback
+      positive_feedback: true
+      
+      # Novel approach not seen before
+      novel_approach: true
+  
+  # Logging
+  logging:
+    # Log level for scratchpad operations
+    # DEBUG, INFO, WARNING, ERROR
+    level: "INFO"
+    
+    # Log to file
+    log_file: "atles_memory/scratchpad/scratchpad.log"
+    
+    # Include detailed thought stages in logs
+    verbose: false
+  
+  # Performance
+  performance:
+    # Use tokenization for more efficient storage (if tokenizer available)
+    use_tokenization: true
+    
+    # Compress archived sessions
+    compress_archives: false
+    
+    # Maximum thoughts per session file before rotating
+    max_thoughts_per_session: 1000
+  
+  # Analysis and debugging
+  analysis:
+    # Generate statistics on thinking patterns
+    track_patterns: true
+    
+    # Track response time improvements
+    track_performance: true
+    
+    # Identify common user corrections for system improvements
+    identify_improvement_areas: true
+

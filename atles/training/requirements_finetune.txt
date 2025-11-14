@@ -1,0 +1,21 @@
+# Requirements for ATLES Fine-Tuning
+# Install with: pip install -r requirements_finetune.txt
+
+# Core ML libraries
+torch>=2.0.0
+transformers>=4.35.0
+datasets>=2.14.0
+accelerate>=0.24.0
+
+# LoRA fine-tuning
+peft>=0.6.0
+bitsandbytes>=0.41.0
+
+# Utilities
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Optional but recommended
+tensorboard>=2.14.0
+wandb>=0.15.0
+
