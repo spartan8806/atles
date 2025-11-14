@@ -34,6 +34,12 @@ embeddinggemma-300m/
 gemma-3-270m/
 Phi-3-mini-4k-instruct/
 model_surgery_backups/
+# But allow public weight configs
+!model_surgery_backups/*.json
+!model_surgery_backups/*.yaml
+!model_surgery_backups/*.yml
+!model_surgery_backups/*.txt
+!model_surgery_backups/*.md
 
 # Performance data
 router_performance_data/
@@ -41,6 +47,11 @@ router_performance_data/
 # Memory databases and personal data - CRITICAL: Never commit personal memories!
 memory/memory.db
 memory/*.db
+# But allow public weight configs in memory/
+!memory/*.json
+!memory/*.yaml
+!memory/*.yml
+!memory/*.txt
 demo_memory/
 atles_memory/
 desktop_user/

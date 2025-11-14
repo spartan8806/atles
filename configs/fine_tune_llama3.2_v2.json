@@ -1,0 +1,22 @@
+{
+  "alias": "llama3.2",
+  "alias_safe": "llama3.2-v2",
+  "base_model_id": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "tokenizer_id": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "max_seq_length": 4096,
+  "per_device_train_batch_size": 2,
+  "per_device_eval_batch_size": 1,
+  "gradient_accumulation_steps": 8,
+  "learning_rate": 2e-5,
+  "num_train_epochs": 2,
+  "warmup_steps": 100,
+  "weight_decay": 0.01,
+  "fp16": true,
+  "bf16": false,
+  "lora": {
+    "r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05
+  }
+}
+

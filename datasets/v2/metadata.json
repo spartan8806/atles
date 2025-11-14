@@ -1,0 +1,19 @@
+{
+  "total": 6487,
+  "train": 5838,
+  "validation": 649,
+  "memory_snippets": 5869,
+  "doc_snippets": 618,
+  "memory_dirs": [
+    "atles_app\\atles_memory",
+    "atles_memory"
+  ],
+  "doc_dirs": [
+    "docs\\guides",
+    "docs\\architecture",
+    "docs\\updates",
+    "docs\\bugs",
+    "docs\\system-analysis",
+    "docs\\memory-system"
+  ]
+}
