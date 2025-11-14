@@ -1,5 +1,11 @@
 # 🧠 ATLES - Advanced Thinking & Learning Execution System# ATLES (Advanced Text Language and Execution System)
 
+# ATLES – 7B embedding model (current open-source MTEB king)
+
+Full 28-page paper, math, diagrams, and ablation studies → [docs folder](docs/)
+
+Model weights uploading tonight. Stay tuned.
+
 
 
 [![Version](https://img.shields.io/badge/version-v2.0-blue.svg)](https://github.com/spartan8806/atles)## 🧠 Overview
