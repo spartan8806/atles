@@ -1,0 +1,12 @@
+{
+  "response_temperature": 0.7,
+  "max_tokens": 2816,
+  "top_k": 50,
+  "top_p": 0.9,
+  "batch_size": 8,
+  "processing_delay": 1.0,
+  "creativity_level": 0.7,
+  "response_variety": 0.8,
+  "analysis_depth": 0.6,
+  "goal_generation_rate": 0.5
+}

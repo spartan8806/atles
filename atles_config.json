@@ -1,0 +1,6 @@
+{
+  "proactive_messaging": {
+    "min_time_between_messages_hours": 0.5,
+    "idle_threshold_minutes": 30
+  }
+}
