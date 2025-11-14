@@ -97,6 +97,31 @@ class IntelligentModelRouter:
                 performance_score=0.97,  # High score - ATLES tuned
                 resource_usage="medium"
             ),
+            "atles-qwen2.5-coder:latest": ModelCapability(
+                model_name="atles-qwen2.5-coder:latest",
+                model_type=ModelType.CODE,
+                supported_tasks=[
+                    TaskType.CODE_GENERATION,
+                    TaskType.CODE_ANALYSIS,
+                    TaskType.REASONING,
+                    TaskType.QUESTION_ANSWERING,
+                    TaskType.TEXT_GENERATION
+                ],
+                performance_score=0.98,  # Coding specialist
+                resource_usage="high"
+            ),
+            "atles-llava:latest": ModelCapability(
+                model_name="atles-llava:latest",
+                model_type=ModelType.MULTIMODAL,
+                supported_tasks=[
+                    TaskType.VISION,
+                    TaskType.DOCUMENT_ANALYSIS,
+                    TaskType.CONVERSATION,
+                    TaskType.QUESTION_ANSWERING
+                ],
+                performance_score=0.96,  # Vision specialist
+                resource_usage="high"
+            ),
             # Base models
             "qwen2.5:7b": ModelCapability(
                 model_name="qwen2.5:7b",
@@ -124,6 +149,7 @@ class IntelligentModelRouter:
             #     performance_score=0.96,  # Lower than ATLES models
             #     resource_usage="high"
             # ),
+            # Base models below - only used as fallbacks if ATLES models unavailable
             "llama3.2:3b": ModelCapability(
                 model_name="llama3.2:3b",
                 model_type=ModelType.GENERATIVE,
