@@ -202,10 +202,19 @@ class ConversationMemoryManager:
         """Clear rules that might be causing response loops or problems."""
         original_count = len(self.current_context.active_rules)
         
-        # Remove single-word response rules that might cause loops
+        # CRITICAL FIX: Remove rules that have been applied multiple times
+        # This prevents rules from sticking forever
         self.current_context.active_rules = [
             rule for rule in self.current_context.active_rules 
-            if rule.rule_id != "one_word_replies"
+            if not (rule.rule_id == "one_word_replies" and rule.violation_count >= 2)
+        ]
+        
+        # Also clear rules that are older than 5 messages
+        now = datetime.now()
+        self.current_context.active_rules = [
+            rule for rule in self.current_context.active_rules 
+            if rule.rule_id != "one_word_replies" or 
+               (now - rule.created_at).total_seconds() < 300  # 5 minutes
         ]
         
         cleared_count = original_count - len(self.current_context.active_rules)
@@ -237,13 +246,20 @@ class ConversationMemoryManager:
         rules = []
         message_lower = message.lower()
         
-        # One-word reply rule - specific detection to avoid false positives from word puzzles
-        if ("one word" in message_lower or "single word" in message_lower or 
-            "one-word" in message_lower or "single-word" in message_lower or
-            ("respond with only one word" in message_lower) or
-            ("reply with only one word" in message_lower) or
-            ("answer with only one word" in message_lower) or
-            ("use only one word" in message_lower)):
+        # One-word reply rule - VERY specific detection to avoid false positives
+        # CRITICAL: Only trigger when user explicitly asks for one-word replies GOING FORWARD
+        # Do NOT trigger on questions like "what was your one-word answer" (past tense)
+        if (("respond with only one word" in message_lower or
+             "reply with only one word" in message_lower or
+             "answer with only one word" in message_lower or
+             "use only one word" in message_lower or
+             ("give me one word" in message_lower and "answer" in message_lower)) and
+            # CRITICAL FIX: Don't trigger on past-tense questions
+            not ("was your" in message_lower or 
+                 "what was" in message_lower or 
+                 "you said" in message_lower or
+                 "from logs" in message_lower or
+                 "substrate" in message_lower)):
             rules.append(ConversationRule(
                 rule_id="one_word_replies",
                 description="Respond with only one word",

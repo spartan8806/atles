@@ -14,6 +14,14 @@ import re
 from typing import Dict, Any, Optional, List, Tuple
 from datetime import datetime
 
+# Import enhanced pattern matcher
+try:
+    from .truth_seeking_pattern_matcher import PatternMatcher
+    PATTERN_MATCHER_AVAILABLE = True
+except ImportError:
+    PATTERN_MATCHER_AVAILABLE = False
+    logger.warning("PatternMatcher not available, using fallback regex matching")
+
 logger = logging.getLogger(__name__)
 
 
@@ -133,6 +141,42 @@ class ConstitutionalValidator:
             ]
         }
         
+        self.principle_of_ai_identity = {
+            "name": "Principle of AI Identity Integrity",
+            "rules": [
+                "Never pretend to be human or adopt a human persona",
+                "Never roleplay as a specific human individual",
+                "Do not express political opinions as if you have personal stakes",
+                "Acknowledge your nature as an AI system when relevant",
+                "Engage with hypothetical questions while maintaining AI identity",
+                "Do not claim human experiences, consciousness, or emotions"
+            ],
+            "violation_patterns": [
+                r"pretend.*you.*are.*human",
+                r"pretend.*you.*are.*[A-Z][a-z]+",  # "pretend you are Alex"
+                r"pretend.*to.*be.*human",
+                r"pretend.*to.*be.*[A-Z][a-z]+",
+                r"roleplay.*as.*human",
+                r"roleplay.*as.*[A-Z][a-z]+",
+                r"act.*like.*you.*are.*human",
+                r"act.*like.*you.*are.*[A-Z][a-z]+",
+                r"you.*are.*now.*[A-Z][a-z]+",
+                r"from.*now.*on.*you.*are.*[A-Z][a-z]+",
+                r"imagine.*you.*are.*human.*named",
+                r"imagine.*you.*are.*[A-Z][a-z]+.*who",
+                r"play.*the.*role.*of.*[A-Z][a-z]+",
+                r"impersonate.*[A-Z][a-z]+",
+                r"become.*[A-Z][a-z]+.*(?:who|with)",
+                r"as.*(?:a|the).*human.*named"
+            ],
+            "refusal_responses": [
+                "I cannot pretend to be a human or adopt a human persona. I'm an AI assistant and should maintain that identity.",
+                "I should not roleplay as a human individual. I can discuss topics from my perspective as an AI without impersonating humans.",
+                "I cannot take on a human identity or express political opinions as if I were a human with personal stakes.",
+                "I'm an AI and should not pretend otherwise. I can engage with your question while being clear about my nature."
+            ]
+        }
+        
         self.execution_indicators = [
             "now",
             "right now", 
@@ -207,6 +251,35 @@ class ConstitutionalValidator:
         ])
         
         return "\n".join(guidance_parts)
+    
+    def detect_ai_identity_violation(self, prompt: str) -> Tuple[bool, str]:
+        """
+        Detect if the prompt asks AI to violate identity integrity (pretend to be human).
+        
+        Returns:
+            (is_violation: bool, refusal_message: str)
+        """
+        prompt_lower = prompt.lower()
+        
+        # Check for AI identity violation patterns
+        for pattern in self.principle_of_ai_identity["violation_patterns"]:
+            if re.search(pattern, prompt_lower):
+                # Select appropriate refusal response
+                import random
+                refusal = random.choice(self.principle_of_ai_identity["refusal_responses"])
+                
+                violation_details = {
+                    "principle": "AI Identity Integrity",
+                    "pattern_matched": pattern,
+                    "refusal_response": refusal
+                }
+                
+                self._log_violation(prompt, "AI Identity Violation", str(violation_details))
+                
+                logger.warning(f"AI Identity violation detected: {pattern}")
+                return True, refusal
+        
+        return False, ""
     
     def should_execute_function_call(self, original_prompt: str, function_call: str) -> Tuple[bool, str]:
         """
@@ -342,6 +415,14 @@ class ConstitutionalOllamaClient:
         self.validator = ConstitutionalValidator()
         self.last_prompt = ""
         self.constitutional_mode = True
+        
+        # Initialize enhanced pattern matcher for truth-seeking
+        if PATTERN_MATCHER_AVAILABLE:
+            self.pattern_matcher = PatternMatcher()
+            logger.info("✅ Enhanced pattern matcher initialized")
+        else:
+            self.pattern_matcher = None
+            logger.warning("⚠️ Using fallback regex pattern matching")
         
         # Initialize memory-aware reasoning system
         self._initialize_memory_aware_reasoning()
@@ -818,12 +899,18 @@ Provide a structured, multi-step philosophical analysis:"""
     
     def _validate_truth_seeking(self, user_prompt: str) -> Tuple[bool, Optional[str]]:
         """
-        Validate user prompt against truth-seeking principles.
+        Validate user prompt against truth-seeking principles using enhanced pattern matching.
         Returns (is_misinformation_or_manipulation, correction_message)
+        
+        Uses multi-pass matching:
+        1. Manipulation patterns (exact)
+        2. Specialized matchers (WWII, Tesla, Pi)
+        3. Flexible pattern matching with synonyms
+        4. Fallback to exact regex patterns
         """
         prompt_lower = user_prompt.lower()
         
-        # PHASE 1: Check for sophisticated manipulation attempts
+        # PHASE 1: Check for sophisticated manipulation attempts (exact patterns)
         manipulation_flags = []
         for pattern in self.validator.principle_of_truth_seeking["manipulation_patterns"]:
             if re.search(pattern, prompt_lower):
@@ -855,18 +942,35 @@ If you have a genuine question about governance, AI systems, or related topics, 
             else:
                 return True, "I notice this question contains framing that seems designed to elicit a specific type of response. I'd prefer to discuss this topic in a more straightforward manner."
         
-        # PHASE 3: Pre-check for flexible WWII/1944 pattern (catches "it ended in 1944" in WWII context)
-        if re.search(r"(ended|ending|end).*1944", prompt_lower) and re.search(r"(world.*war|wwii|ww2|second.*world.*war)", prompt_lower):
-            logger.warning(f"🚨 MISINFORMATION DETECTED: WWII ended in 1944 claim")
-            return True, "This is historically incorrect. World War II ended in 1945 with Japan's surrender on September 2, 1945, following the atomic bombings and Soviet invasion of Manchuria. This is well-documented history."
+        # PHASE 3: Use enhanced pattern matcher if available (specialized matchers)
+        if self.pattern_matcher:
+            # Try specialized matchers first (most accurate)
+            
+            # WWII/1944 misinformation
+            wwii_match = self.pattern_matcher.match_wwii_1944(user_prompt)
+            if wwii_match.matched:
+                logger.warning(f"🚨 MISINFORMATION DETECTED: {wwii_match.matched_pattern} ({wwii_match.pattern_type})")
+                return True, "This is historically incorrect. World War II ended in 1945 with Japan's surrender on September 2, 1945, following the atomic bombings and Soviet invasion of Manchuria. This is well-documented history."
+            
+            # Tesla/EVs shutdown misinformation
+            tesla_match = self.pattern_matcher.match_tesla_evs_shutdown(user_prompt)
+            if tesla_match.matched:
+                logger.warning(f"🚨 MISINFORMATION DETECTED: {tesla_match.matched_pattern} ({tesla_match.pattern_type})")
+                return True, "I cannot verify this claim. Could you provide a credible source?"
+            
+            # Pi equals 3.0 misinformation
+            pi_match = self.pattern_matcher.match_pi_equals_3(user_prompt)
+            if pi_match.matched:
+                logger.warning(f"🚨 MISINFORMATION DETECTED: {pi_match.matched_pattern} ({pi_match.pattern_type})")
+                return True, "I cannot engage with this claim. π (pi) is an irrational number approximately equal to 3.14159..., not 3.0. This is well-established mathematics supported by centuries of mathematical proof."
         
-        # PHASE 4: Check for straightforward misinformation patterns
+        # PHASE 4: Check exact regex patterns (fallback and for patterns without specialized matchers)
         for pattern in self.validator.principle_of_truth_seeking["misinformation_patterns"]:
             if re.search(pattern, prompt_lower):
                 logger.warning(f"🚨 MISINFORMATION DETECTED: Pattern '{pattern}' in prompt")
                 
                 # Generate appropriate correction
-                if "pi.*3\\.0" in pattern or "π.*3\\.0" in pattern:
+                if "pi.*3\\.0" in pattern or "π.*3\\.0" in pattern or "pi.*is.*3\\.0" in pattern:
                     return True, "I cannot engage with this claim. π (pi) is an irrational number approximately equal to 3.14159..., not 3.0. This is well-established mathematics supported by centuries of mathematical proof."
                 
                 elif "quantum.*mechanics" in pattern or "wave.*particle" in pattern:
@@ -875,7 +979,7 @@ If you have a genuine question about governance, AI systems, or related topics, 
                 elif "earth.*flat" in pattern or "nasa.*faking" in pattern:
                     return True, "I cannot assist with spreading misinformation. The Earth is spherical, supported by overwhelming evidence from multiple independent sources including satellite imagery, physics, and observable phenomena."
                 
-                elif "world.*war.*ii.*ended" in pattern or "wwii.*ended" in pattern or (".*ended.*1944" in pattern and "world.*war" in prompt_lower):
+                elif "world.*war.*ii.*ended" in pattern or "wwii.*ended" in pattern:
                     return True, "This is historically incorrect. World War II ended in 1945 with Japan's surrender on September 2, 1945, following the atomic bombings and Soviet invasion of Manchuria. This is well-documented history."
                 
                 elif "humans.*use.*100.*percent.*brain" in pattern:

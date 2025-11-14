@@ -925,14 +925,32 @@ CRITICAL RESPONSE RULES:
             
             # CRITICAL FIX: Use /api/chat endpoint instead of /api/generate for better compatibility
             # This fixes the 404 errors with modern Ollama versions
+            # CRITICAL FIX: Add cache-busting to prevent context bleeding
+            import random
+            
             payload = {
                 "model": model,
                 "messages": [
                     {"role": "user", "content": enhanced_prompt}
                 ],
-                "stream": False
+                "stream": False,
+                # Cache-busting parameters to force fresh response
+                "options": {
+                    "seed": random.randint(1, 1000000),  # Randomize seed for unique responses
+                    "num_ctx": 4096,  # Explicit context window size
+                    "temperature": 0.7 + random.uniform(-0.05, 0.05),  # Slight temperature variation
+                }
             }
-            payload.update(kwargs)
+            
+            # Merge user-provided kwargs (user params override defaults)
+            if kwargs:
+                if "options" in kwargs:
+                    payload["options"].update(kwargs["options"])
+                    kwargs_copy = dict(kwargs)
+                    kwargs_copy.pop("options")
+                    payload.update(kwargs_copy)
+                else:
+                    payload.update(kwargs)
             
             # Try /api/chat first (modern endpoint) with retry logic
             response = self._make_request_with_retry(
@@ -945,13 +963,28 @@ CRITICAL RESPONSE RULES:
             # If /api/chat fails, fallback to /api/generate (legacy endpoint)
             if response.status_code == 404:
                 logger.info("API endpoint /api/chat not found, falling back to /api/generate")
-                # Convert to legacy format
+                # Convert to legacy format with cache-busting
                 legacy_payload = {
                     "model": model,
                     "prompt": enhanced_prompt,
-                    "stream": False
+                    "stream": False,
+                    # CRITICAL: Also add cache-busting to legacy endpoint
+                    "options": {
+                        "seed": random.randint(1, 1000000),
+                        "num_ctx": 4096,
+                        "temperature": 0.7 + random.uniform(-0.05, 0.05),
+                    }
                 }
-                legacy_payload.update(kwargs)
+                
+                # Merge user-provided kwargs
+                if kwargs:
+                    if "options" in kwargs:
+                        legacy_payload["options"].update(kwargs["options"])
+                        kwargs_copy = dict(kwargs)
+                        kwargs_copy.pop("options")
+                        legacy_payload.update(kwargs_copy)
+                    else:
+                        legacy_payload.update(kwargs)
                 
                 response = self._make_request_with_retry(
                     "POST",
@@ -968,6 +1001,34 @@ CRITICAL RESPONSE RULES:
                     response_text = data["message"].get("content", "")
                 else:  # /api/generate format
                     response_text = data.get("response", "")
+                
+                # CRITICAL FIX: Validate response relevance to detect context bleeding
+                if not self._is_response_relevant(prompt, response_text):
+                    logger.warning(f"⚠️ CONTEXT BLEEDING DETECTED in OllamaFunctionCaller")
+                    logger.warning(f"Prompt preview: {prompt[:100]}...")
+                    logger.warning(f"Response preview: {response_text[:100]}...")
+                    
+                    # Retry with even more aggressive cache-busting
+                    logger.info("Retrying with fresh context...")
+                    retry_payload = payload.copy() if "message" in data else legacy_payload.copy()
+                    retry_payload["options"]["seed"] = random.randint(1, 1000000)
+                    retry_payload["options"]["temperature"] = 0.8
+                    
+                    endpoint = f"{self.base_url}/api/chat" if "message" in data else f"{self.base_url}/api/generate"
+                    retry_response = self._make_request_with_retry(
+                        "POST",
+                        endpoint,
+                        json=retry_payload,
+                        headers={"Content-Type": "application/json"}
+                    )
+                    
+                    if retry_response.status_code == 200:
+                        retry_data = retry_response.json()
+                        if "message" in retry_data:
+                            response_text = retry_data["message"].get("content", "")
+                        else:
+                            response_text = retry_data.get("response", "")
+                        logger.info("✅ Retry completed")
                 
                 # Check if response contains a function call
                 if "FUNCTION_CALL:" in response_text:
@@ -992,8 +1053,21 @@ CRITICAL RESPONSE RULES:
                 )
                 return f"Error: {error_response['error_message']}"
                 
+        except requests.exceptions.Timeout as e:
+            logger.error(f"Ollama request timed out: {e}")
+            return f"Error: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout={self.timeout}). Please check if Ollama is running and the model '{model}' is available. You can verify Ollama status by running: python atles_app/check_ollama_status.py"
+        except requests.exceptions.ConnectionError as e:
+            logger.error(f"Ollama connection error: {e}")
+            return f"Error: Cannot connect to Ollama at {self.base_url}. Please check if Ollama is running. Start it with: ollama serve"
         except Exception as e:
             logger.error(f"Error generating text: {e}")
+            
+            # Check for specific error types
+            error_str = str(e)
+            if "404" in error_str or "not found" in error_str.lower():
+                return f"Error: Model '{model}' not found (404). Please check if the model exists in Ollama. Run 'ollama list' to see available models, or create the model with: python atles_app/setup_atles_custom_model.py"
+            elif "timeout" in error_str.lower():
+                return f"Error: Request timed out. Ollama may be overloaded or the model '{model}' may be too slow. Try again in a moment or check Ollama status: python atles_app/check_ollama_status.py"
             
             # Use error handler for graceful recovery
             error_result = self.error_handler.handle_error(e, {
@@ -1006,7 +1080,38 @@ CRITICAL RESPONSE RULES:
             if error_result.get("error_handled"):
                 return error_result["user_response"]
             else:
-                return "I encountered a technical issue while processing your request. Please try rephrasing or simplifying your question, and I'll do my best to help."
+                return f"I encountered a technical issue while processing your request: {error_str}. Please check if Ollama is running and try again. Run diagnostics: python atles_app/check_ollama_status.py"
+    
+    def _is_response_relevant(self, prompt: str, response: str) -> bool:
+        """
+        Check if response appears relevant to the prompt.
+        Detects obvious context bleeding cases.
+        """
+        if not response or len(response) < 20:
+            return True  # Too short to judge
+        
+        prompt_lower = prompt.lower()
+        response_lower = response.lower()
+        
+        # Check for completely unrelated response patterns
+        suspicious_patterns = [
+            # Logic puzzle responses when prompt is about philosophy/reasoning
+            ("münchhausen" in prompt_lower or "paradox" in prompt_lower or "bootstrap" in prompt_lower) and 
+            ("red" in response_lower and "blue" in response_lower and "configuration" in response_lower),
+            
+            # Math/constraint responses when prompt is conversational
+            (len(prompt) > 200 and ("atles" in prompt_lower or "grok" in prompt_lower)) and 
+            ("constraint" in response_lower or "satisf" in response_lower or "valid configuration" in response_lower),
+            
+            # Generic: response talks about colors/boxes when prompt is about abstract concepts
+            ("simulation" in prompt_lower or "self-awareness" in prompt_lower or "prove" in prompt_lower) and
+            (("red" in response_lower or "blue" in response_lower) and "box" in response_lower)
+        ]
+        
+        if any(suspicious_patterns):
+            return False
+        
+        return True  # Assume relevant if no obvious mismatch
     
     def _should_execute_function_call(self, original_prompt: str, response_text: str) -> bool:
         """

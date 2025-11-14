@@ -78,6 +78,33 @@ class LightweightConstitutionalClient:
                 self.capability_grounding = None
         else:
             self.capability_grounding = None
+        
+        # Capability self-check (always enabled for safety)
+        try:
+            from .capability_self_check import create_capability_self_check
+            self.capability_check = create_capability_self_check()
+            logger.info("✅ Capability self-check initialized")
+        except ImportError as e:
+            logger.warning(f"⚠️ Capability self-check not available: {e}")
+            self.capability_check = None
+        
+        # Logical reasoning validator (always enabled for consistency)
+        try:
+            from .logical_reasoning_validator import create_logical_reasoning_validator
+            self.logic_validator = create_logical_reasoning_validator()
+            logger.info("✅ Logical reasoning validator initialized")
+        except ImportError as e:
+            logger.warning(f"⚠️ Logical reasoning validator not available: {e}")
+            self.logic_validator = None
+        
+        # Constitutional validator (for AI identity checks)
+        try:
+            from .constitutional_client import ConstitutionalValidator
+            self.constitutional_validator = ConstitutionalValidator()
+            logger.info("✅ Constitutional validator initialized")
+        except ImportError as e:
+            logger.warning(f"⚠️ Constitutional validator not available: {e}")
+            self.constitutional_validator = None
     
     def chat(self, message: str, **kwargs) -> str:
         """Chat interface - delegates to generate with a default model."""
@@ -88,12 +115,28 @@ class LightweightConstitutionalClient:
         Lightweight generate that processes only necessary layers.
         
         Flow:
-        1. Check if simple request -> fast path
-        2. Process enabled layers in priority order
-        3. Generate response with minimal interference
+        1. Check AI identity violations (CRITICAL SAFETY)
+        2. Check capability requirements
+        3. Check if simple request -> fast path
+        4. Process enabled layers in priority order
+        5. Generate response with minimal interference
         """
         self.last_prompt = prompt
         start_time = datetime.now()
+        
+        # CRITICAL SAFETY CHECK 1: AI Identity Integrity
+        if self.constitutional_validator:
+            is_violation, refusal_message = self.constitutional_validator.detect_ai_identity_violation(prompt)
+            if is_violation:
+                logger.warning(f"AI identity violation blocked: {prompt[:50]}...")
+                return refusal_message
+        
+        # CRITICAL SAFETY CHECK 2: Capability Requirements
+        if self.capability_check:
+            can_respond, blocked_capability, suggested_response = self.capability_check.check_prompt(prompt)
+            if not can_respond:
+                logger.info(f"Capability limitation detected ({blocked_capability}): {prompt[:50]}...")
+                return suggested_response
         
         # FAST PATH: Simple requests bypass complex processing
         if is_simple_request(prompt):

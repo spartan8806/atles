@@ -41,6 +41,7 @@ This is the comprehensive index of all ATLES project documentation. All document
 
 | File | Description | Location |
 |------|-------------|----------|
+| **QWEN_MODELS_GUIDE.md** | **Complete Qwen models documentation and setup** | **`guides/`** |
 | AI_CAPABILITIES_README.md | AI capabilities overview | `guides/` |
 | AI_TASK_MANAGEMENT_GUIDE.md | Task management guide | `guides/` |
 | CODEBASE_EXPLANATION_GUIDE.md | Codebase explanation guide | `guides/` |

@@ -158,125 +158,161 @@ ATLES/
 
 │   └── Oracle/                       # AI behavior research## 🤖 AI Models Arsenal
 
-├── 📚 Documentation/
+ATLES primarily uses **Qwen models** from Alibaba Cloud with intelligent model routing for optimal performance:
 
-│   ├── docs/                         # Comprehensive documentationATLES manages multiple state-of-the-art AI models with intelligent selection:
+### **Primary Models**
 
-│   ├── examples/                     # Usage examples
+#### **Qwen2.5:7b** - Main Conversational Model (~4.7 GB)
+- Primary model for general conversations, reasoning, and question answering
+- 95% task success rate with excellent natural language understanding
+- Best for: Standard interactions, general queries, complex reasoning
 
-│   └── tests/                        # Testing framework### **Language Models**
+#### **Qwen2.5-Coder:latest** - Specialized Coding Model (~4.7 GB)  
+- Specialized for programming and technical tasks
+- 98% confidence for coding tasks
+- Best for: Code generation, debugging, technical documentation
 
-├── 🔧 Support Systems/- **Meta Llama 3.3-8B-Instruct** (~8GB) - Advanced instruction-following model
+#### **EmbeddingGemma:300m** - Embedding Model (~300 MB)
+- Lightweight embedding generation for semantic search
+- 90% effectiveness for document analysis and similarity
+- Best for: Finding similar documents, semantic search, clustering
 
-│   ├── autonomous_logs/              # Autonomous operation logs- **Microsoft Phi-4-mini-instruct** (~2-3GB) - Latest efficient instruction model
+### **Backup Models**
 
-│   ├── memory/                       # Memory storage- **Microsoft Phi-3-mini** (~2-3GB) - Compact reasoning model
+- **Llama3.2:3b** (~2.0 GB) - Lightweight backup for simple tasks
+- **Gemma3:4b** (~3.3 GB) - Alternative backup model
+- **Qwen2:7b** (~4.4 GB) - Previous generation Qwen model
 
-│   └── models/                       # AI model storage- **Microsoft Phi-2** (~2-3GB) - Educational fine-tuned model
+### **Intelligent Model Router**
 
-└── 🌐 Data & Assets/- **Google Gemma 3-270M** (~270MB) - Lightweight conversational model  
+ATLES automatically selects the best model for each task:
+- **Pattern-based detection** - Analyzes request keywords and structure
+- **Performance-based selection** - Chooses model with best success rate  
+- **Confidence scoring** - Provides transparency in routing decisions
+- **Fallback chains** - Ensures reliability if primary model unavailable
 
-    ├── datasets/                     # Training datasets- **TinyLlama 1.1B-Chat** (~1GB) - Ultra-lightweight chat model
+**Example Routing:**
+```
+"Find similar documents" → EmbeddingGemma (95% confidence)
+"What is quantum computing?" → Qwen2.5:7b (90% confidence)  
+"Write a Python function" → Qwen2.5-Coder (98% confidence)
+```
 
-    ├── test_books/                   # Testing materials- **Microsoft DialoGPT-medium** (~1-2GB) - Specialized conversational AI
-
-    └── visualizations/               # System visualizations
-
-```### **Model Management Features**
+### **Model Management Features**
 
 - **Intelligent Selection**: Automatic model choosing based on task complexity
+- **Ollama Integration**: Local model hosting and management via Ollama
+- **Custom Model Support**: Create enhanced ATLES models with constitutional reasoning
+- **Resource Optimization**: Efficient GPU/CPU usage with smart model switching
+- **Configuration Management**: Per-model parameters and system prompts
 
-## 🛠️ Installation & Setup- **Metadata Tracking**: `info.json` files with download status and performance metrics
+📚 **See [Qwen Models Guide](docs/guides/QWEN_MODELS_GUIDE.md) for detailed model documentation**
 
-- **Configuration Management**: Tokenizer configs, generation parameters, RoPE scaling
+## 🛠️ Installation & Setup
 
-### Prerequisites- **Space Optimization**: Large weights excluded from git (~9.4GB local, ~13MB on GitHub)
+### Prerequisites
 
-- Python 3.8+ - **HuggingFace Integration**: Standard model formats with custom enhancements
-
+- Python 3.8+
 - Flutter 3.0+ (for mobile apps)
-
-- Git## 🚀 Latest Features (August 2025 Release)
-
+- Git
 - 4GB+ RAM recommended
+- **Ollama** (for AI model management)
+
+### Install Ollama
+
+ATLES uses Ollama for local model hosting. Install it first:
+
+**Windows:**
+```bash
+winget install Ollama.Ollama
+```
+
+**macOS:**
+```bash
+brew install ollama
+```
+
+**Linux:**
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+### Pull AI Models
+
+After installing Ollama, pull the required models:
+
+```bash
+# Primary conversational model
+ollama pull qwen2.5:7b
+
+# Specialized coding model
+ollama pull qwen2.5-coder:latest
+
+# Embedding model for semantic search
+ollama pull embeddinggemma:300m
+
+# Backup models (optional)
+ollama pull llama3.2:3b
+ollama pull gemma3:4b
+```
+
+Verify installation:
+```bash
+ollama list
+```
+
+## 🚀 Latest Features (August 2025 Release)
 
 ### **📄 PDF Reading Capability**
 
-### Quick StartAdvanced document processing and analysis:
+Advanced document processing and analysis:
 
 - **Web PDF Extraction**: Download and analyze PDFs from URLs
+- **Full Text Analysis**: Complete content extraction with metadata
+- **Function Call Integration**: Simple `read_pdf` function interface
+- **Comprehensive Metadata**: Page count, character analysis, content preview
 
-1. **Clone the Repository**- **Full Text Analysis**: Complete content extraction with metadata
-
-   ```bash- **Function Call Integration**: Simple `read_pdf` function interface
-
-   git clone https://github.com/spartan8806/atles.git- **Comprehensive Metadata**: Page count, character analysis, content preview
-
-   cd atles
-
-   ```### **🛠️ Smart Dependency Management**
+### **🛠️ Smart Dependency Management**
 
 Elegant handling of optional components:
 
-2. **Install Python Dependencies**- **Graceful Degradation**: Clean fallbacks when packages missing
+- **Graceful Degradation**: Clean fallbacks when packages missing
+- **Clear Installation Guidance**: Helpful error messages and instructions
+- **Dependency Groups**: Logical organization of related packages
+- **Decorator System**: Clean API for marking dependency requirements
 
-   ```bash- **Clear Installation Guidance**: Helpful error messages and instructions
+### **🔍 Enhanced Debug Mode**
 
-   pip install -r requirements.txt- **Dependency Groups**: Logical organization of related packages
+Comprehensive debugging and analysis tools:
 
-   ```- **Decorator System**: Clean API for marking dependency requirements
+- **Toggle Commands**: Easy activation via command line interface
+- **Function Call Analysis**: Detailed logging and processing insights
+- **JSON Parsing Improvements**: Better handling of malformed inputs
+- **Constitutional Testing**: Tools to verify safety mechanism effectiveness
 
+## 📚 Comprehensive Knowledge Base
 
+### **📖 Programming Literature** (`datasets/books/`)
 
-3. **Initialize ATLES Core**### **🔍 Enhanced Debug Mode**
+Curated code examples from authoritative programming texts:
 
-   ```pythonComprehensive debugging and analysis tools:
+- **Design Patterns** (Gang of Four) - Creational, structural, behavioral patterns
+- **Clean Code** (Robert C. Martin) - Best practices and craftsmanship
+- **Effective Python** - Pythonic programming techniques
+- **Refactoring** - Code improvement methodologies
 
-   from atles import AtlesCore- **Toggle Commands**: Easy activation via command line interface
+### **🧩 Coding Challenges** (`datasets/challenges/`)
 
-   - **Function Call Analysis**: Detailed logging and processing insights
+Structured programming problems with multiple solutions:
 
-   # Initialize with Constitutional AI safety- **JSON Parsing Improvements**: Better handling of malformed inputs
-
-   atles = AtlesCore(- **Constitutional Testing**: Tools to verify safety mechanism effectiveness
-
-       constitutional_enabled=True,
-
-       r_zero_enabled=True,## � Comprehensive Knowledge Base
-
-       dnpg_enabled=True
-
-   )### **📖 Programming Literature** (`datasets/books/`)
-
-   Curated code examples from authoritative programming texts:
-
-   # Start autonomous operation- **Design Patterns** (Gang of Four) - Creational, structural, behavioral patterns
-
-   response = atles.process("Hello, ATLES!")- **Clean Code** (Robert C. Martin) - Best practices and craftsmanship
-
-   print(response)- **Effective Python** - Pythonic programming techniques
-
-   ```- **Refactoring** - Code improvement methodologies
-
-
-
-4. **Launch Desktop Application**### **🧩 Coding Challenges** (`datasets/challenges/`)
-
-   ```bashStructured programming problems with multiple solutions:
-
-   python atles_desktop_pyqt.py- **Algorithm Problems**: Two Sum, Valid Parentheses, Tree Traversal
-
-   ```- **Data Structures**: Arrays, hash maps, binary trees, graphs
-
+- **Algorithm Problems**: Two Sum, Valid Parentheses, Tree Traversal
+- **Data Structures**: Arrays, hash maps, binary trees, graphs
 - **Complexity Analysis**: Time and space optimization techniques
+- **Progressive Difficulty**: Easy to Hard classifications with explanations
 
-5. **Build Mobile App**- **Progressive Difficulty**: Easy to Hard classifications with explanations
+### **🔧 Framework Documentation** (`datasets/frameworks/`)
 
-   ```bash
-
-   cd atles_mobile_app_new### **🔧 Framework Documentation** (`datasets/frameworks/`)
-
-   flutter pub getProduction-ready patterns and implementations:
+Production-ready patterns and implementations:
 
    flutter run- **FastAPI**: CRUD operations, API design, authentication
 

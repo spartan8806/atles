@@ -71,19 +71,33 @@ class IntelligentModelRouter:
     def _initialize_model_capabilities(self) -> Dict[str, ModelCapability]:
         """Initialize model capabilities database"""
         return {
-            "embeddinggemma:300m": ModelCapability(
-                model_name="embeddinggemma:300m",
-                model_type=ModelType.EMBEDDING,
+            # ATLES fine-tuned models - HIGHEST PRIORITY
+            "atles-qwen2.5:7b-enhanced": ModelCapability(
+                model_name="atles-qwen2.5:7b-enhanced",
+                model_type=ModelType.GENERATIVE,
                 supported_tasks=[
-                    TaskType.EMBEDDING,
-                    TaskType.SIMILARITY,
-                    TaskType.CLUSTERING,
-                    TaskType.DOCUMENT_ANALYSIS,
-                    TaskType.SEARCH
+                    TaskType.CONVERSATION,
+                    TaskType.REASONING,
+                    TaskType.TEXT_GENERATION,
+                    TaskType.QUESTION_ANSWERING,
+                    TaskType.CODE_GENERATION
                 ],
-                performance_score=0.9,
-                resource_usage="low"
+                performance_score=0.99,  # Highest score - fine-tuned for ATLES
+                resource_usage="high"
             ),
+            "atles-llama3.2:latest": ModelCapability(
+                model_name="atles-llama3.2:latest",
+                model_type=ModelType.GENERATIVE,
+                supported_tasks=[
+                    TaskType.CONVERSATION,
+                    TaskType.REASONING,
+                    TaskType.TEXT_GENERATION,
+                    TaskType.QUESTION_ANSWERING
+                ],
+                performance_score=0.97,  # High score - ATLES tuned
+                resource_usage="medium"
+            ),
+            # Base models
             "qwen2.5:7b": ModelCapability(
                 model_name="qwen2.5:7b",
                 model_type=ModelType.GENERATIVE,
@@ -97,17 +111,19 @@ class IntelligentModelRouter:
                 performance_score=0.95,
                 resource_usage="high"
             ),
-            "qwen2.5-coder:latest": ModelCapability(
-                model_name="qwen2.5-coder:latest",
-                model_type=ModelType.GENERATIVE,
-                supported_tasks=[
-                    TaskType.CODE_GENERATION,
-                    TaskType.REASONING,
-                    TaskType.QUESTION_ANSWERING
-                ],
-                performance_score=0.98,
-                resource_usage="high"
-            ),
+            # NOTE: qwen2.5-coder:latest removed - not installed
+            # If you install it later, uncomment this:
+            # "qwen2.5-coder:latest": ModelCapability(
+            #     model_name="qwen2.5-coder:latest",
+            #     model_type=ModelType.GENERATIVE,
+            #     supported_tasks=[
+            #         TaskType.CODE_GENERATION,
+            #         TaskType.REASONING,
+            #         TaskType.QUESTION_ANSWERING
+            #     ],
+            #     performance_score=0.96,  # Lower than ATLES models
+            #     resource_usage="high"
+            # ),
             "llama3.2:3b": ModelCapability(
                 model_name="llama3.2:3b",
                 model_type=ModelType.GENERATIVE,
