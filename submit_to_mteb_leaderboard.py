@@ -5,7 +5,7 @@ This script runs the essential MTEB benchmarks and prepares results for submissi
 to the official MTEB leaderboard at https://huggingface.co/spaces/mteb/leaderboard
 """
 
-from mteb import MTEB
+import mteb
 from sentence_transformers import SentenceTransformer
 import json
 from datetime import datetime
@@ -118,15 +118,18 @@ def run_mteb_for_leaderboard():
     print("=" * 80)
     print("This will take several hours. Progress will be shown below.\n")
     
-    # Run evaluation
-    evaluation = MTEB(tasks=task_selection, task_langs=["en"])
+    # Run evaluation using current MTEB API
+    import mteb
     
-    results = evaluation.run(
-        model,
-        output_folder="mteb_results",
-        overwrite_results=False,  # Resume if interrupted
-        verbosity=2,
-        eval_splits=["test"]
+    # Get task objects
+    task_objects = [mteb.get_task(task_name) for task_name in task_selection]
+    
+    results = mteb.evaluate(
+        model=model,
+        tasks=task_objects,
+        prediction_folder="mteb_results",
+        overwrite_strategy="only-missing",  # Resume if interrupted
+        show_progress_bar=True
     )
     
     print("\n" + "=" * 80)

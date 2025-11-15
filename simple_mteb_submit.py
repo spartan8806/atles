@@ -81,12 +81,14 @@ print("This will take several hours but can be interrupted and resumed.\n")
 print("=" * 80)
 
 # Run evaluation using current MTEB API
+task_objects = [mteb.get_task(task_name) for task_name in tasks]
+
 results = mteb.evaluate(
     model=model,
-    tasks=tasks,
-    output_folder="mteb_results",
-    verbosity=2,
-    overwrite=False  # Resume if interrupted
+    tasks=task_objects,
+    prediction_folder="mteb_results",
+    overwrite_strategy="only-missing",  # Resume if interrupted
+    show_progress_bar=True
 )
 
 print("\n" + "=" * 80)
