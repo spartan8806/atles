@@ -1,104 +1,39 @@
-# 🧠 ATLES - Advanced Thinking & Learning Execution System# ATLES (Advanced Text Language and Execution System)
+# 🧠 ATLES - Advanced Thinking & Learning Execution System
 
-
-
-[![Version](https://img.shields.io/badge/version-v2.0-blue.svg)](https://github.com/spartan8806/atles)## 🧠 Overview
-
+[![Version](https://img.shields.io/badge/version-v2.1-blue.svg)](https://github.com/spartan8806/atles)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://python.org)
-
-[![Flutter](https://img.shields.io/badge/flutter-3.0%2B-blue.svg)](https://flutter.dev)ATLES is a sophisticated AI system combining constitutional AI safety, advanced text processing, machine learning capabilities, and cross-platform interfaces. This comprehensive system features architectural layer management, lightweight constitutional clients, and cutting-edge AI model integration with robust safety mechanisms.
-
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Constitutional AI](https://img.shields.io/badge/safety-constitutional%20AI-red.svg)](#constitutional-ai-safety)
 
-[![Constitutional AI](https://img.shields.io/badge/safety-constitutional%20AI-red.svg)](#constitutional-ai-safety)**Version:** 0.5.1 - with Architectural Fixes Integration
+**Version:** 2.1 - Modern UI & Intelligent Model Routing
 
+> A revolutionary AI system featuring Constitutional AI safety, intelligent model routing, fine-tuned embeddings, and modern cross-platform interfaces.
 
+## 🌟 What is ATLES?
 
-> A revolutionary AI system featuring Constitutional AI safety, R-Zero autonomous learning, DNPG neural patterns, and multi-platform deployment capabilities.## 🏗️ System Architecture
+ATLES (Advanced Thinking & Learning Execution System) is a comprehensive AI platform that combines cutting-edge safety measures with advanced learning capabilities and intelligent model routing:
 
+- **🛡️ Constitutional AI** - Advanced safety and behavior monitoring
+- **🧠 Intelligent Model Router** - Automatic task-based model selection
+- **📊 Fine-tuned Embeddings** - Custom MPNet model for semantic tasks
+- **📱 Modern UI** - Streamlined chat interface with PyQt6
+- **🔄 Multi-Model Support** - Qwen2.5, Llama3.2, CodeLlama, LLaVA
+- **🎯 Memory Integration** - Episodic and semantic memory systems
 
+## 🚀 Quick Start
 
-## 🌟 What is ATLES?### **📁 Core Components**
+### Launch Modern UI
+```bash
+cd D:\.atles\atles_app
+run_modern_ui.bat
+```
 
-
-
-ATLES (Advanced Thinking & Learning Execution System) is a comprehensive AI platform that combines cutting-edge safety measures with advanced learning capabilities. Originally started as a data-driven project, ATLES has evolved into a complete AI ecosystem featuring:```
-
-atles/
-
-- **🛡️ Constitutional AI** - Advanced safety and behavior monitoring├── 🤖 atles/                    # Core AI system modules
-
-- **🔄 R-Zero Learning** - Revolutionary autonomous improvement system  │   ├── lightweight_constitutional_client.py  # Streamlined safety system
-
-- **🧠 DNPG Neural Patterns** - Dynamic Neural Pattern Generation for memory-aware reasoning│   ├── unified_constitutional_client.py      # Backward compatibility layer
-
-- **📱 Multi-Platform Apps** - Native mobile and desktop applications│   └── __init__.py             # System initialization & lazy loading
-
-- **🎯 Autonomous Systems** - Self-directed goal management and execution├── 📚 datasets/                 # Curated learning datasets
-
-│   ├── books/                  # Programming book excerpts & examples
-
-## 🚀 Key Features│   ├── challenges/             # Coding challenges & solutions  
-
-│   ├── frameworks/             # Framework documentation & examples
-
-### 🛡️ Constitutional AI Safety System│   └── github/                 # Code snippets from repositories
-
-- **Lightweight Constitutional Client** - Efficient safety monitoring├── 🤖 models/                   # AI model storage & metadata
-
-- **Unified Constitutional System** - Integrated behavior control├── 🧠 memory/                   # Persistent storage database
-
-- **Intent-Based Safety** - Context-aware safety enforcement├── � flutter/                  # Cross-platform UI components
-
-- **Real-time Monitoring** - Continuous behavior analysis│   └── docs/roadmap/           # Development roadmaps
-
-├── 🔮 Oracle/                   # AI behavior research modules
-
-### 🔄 R-Zero Integration (Revolutionary Learning)├── �🗂️ cache/                   # Temporary files & caching
-
-- **Autonomous Learning** - Self-improving AI capabilities└── 📋 Configuration files       # Git, dependencies, release notes
-
-- **Metacognitive Roadmap** - Self-awareness and reflection```
-
-- **Safe R-Zero Implementation** - Controlled autonomous development
-
-- **Performance Optimization** - Continuous improvement cycles## 🔧 Core System Features
-
-
-
-### 🧠 DNPG (Dynamic Neural Pattern Generation)### **🛡️ Constitutional AI Safety System**
-
-- **Memory-Aware Reasoning** - Context-sensitive decision makingAdvanced safety and behavior control with architectural layer management:
-
-- **Pattern Recognition** - Advanced neural pattern analysis
-
-- **Phoenix-RZero-DNPG Hybrid** - Combined learning system- **Lightweight Constitutional Client**: Streamlined safety without bureaucracy
-
-- **Episodic-Semantic Memory** - Comprehensive memory integration- **Architectural Layer Manager**: Granular control over AI processing layers
-
-- **Smart Request Routing**: Simple requests bypass complex processing for performance
-
-### 📱 Multi-Platform Applications- **Safety-First Design**: Essential protections without over-processing
-
-
-
-#### Mobile Apps (Flutter-based)**Key Safety Features:**
-
-- **ATLES Mini** - Lightweight mobile interface- Function call validation and dangerous operation blocking
-
-- **ATLES Mobile** - Full-featured mobile application- Constitutional enforcement testing and validation
-
-- **Cross-Platform** - Android, iOS, Web, Windows, macOS, Linux support- Bootstrap system for identity recognition and hypothetical engagement
-
-- **Real-time Sync** - Cloud synchronization capabilities- Capability grounding for response validation
-
-
-
-#### Desktop Applications### **🧠 AI Model Integration**
-
-- **PyQt Desktop** - Native desktop interfaceSophisticated model management and inference:
-
-- **Tkinter Apps** - Lightweight desktop solutions
+### Available Models
+- **qwen2.5** - General conversation (Performance: 0.95)
+- **llama3.2** - Lightweight chat (Performance: 0.90)
+- **qwen2.5-coder** - Code specialist (Performance: 0.93)
+- **llava** - Vision & multimodal (Performance: 0.92)
+- **atles_mpnet_finetuned** - Embeddings & search (Performance: 0.53)
 
 - **Web Interface** - Browser-based access- **Multi-Model Support**: 7+ state-of-the-art language models
 
@@ -162,26 +97,75 @@ ATLES primarily uses **Qwen models** from Alibaba Cloud with intelligent model r
 
 ### **Primary Models**
 
-#### **Qwen2.5:7b** - Main Conversational Model (~4.7 GB)
-- Primary model for general conversations, reasoning, and question answering
-- 95% task success rate with excellent natural language understanding
-- Best for: Standard interactions, general queries, complex reasoning
+## 🏗️ System Architecture
 
-#### **Qwen2.5-Coder:latest** - Specialized Coding Model (~4.7 GB)  
-- Specialized for programming and technical tasks
-- 98% confidence for coding tasks
-- Best for: Code generation, debugging, technical documentation
+### **📁 Core Components**
 
-#### **EmbeddingGemma:300m** - Embedding Model (~300 MB)
-- Lightweight embedding generation for semantic search
-- 90% effectiveness for document analysis and similarity
-- Best for: Finding similar documents, semantic search, clustering
+```
+atles/
+├── 🤖 atles/                    # Core AI system modules
+│   ├── intelligent_model_router.py      # Task-based model routing
+│   ├── ollama_client_enhanced.py        # Ollama integration
+│   ├── memory_integration.py            # Memory management
+│   ├── lightweight_constitutional_client.py  # Safety system
+│   └── __init__.py                      # System initialization
+├── 🎨 atles_app/                # Desktop applications
+│   ├── atles_modern_ui.py               # New modern chat UI
+│   ├── atles_desktop_pyqt.py            # Full-featured desktop
+│   ├── run_modern_ui.bat                # Launch modern UI
+│   └── run_unlimited_atles.bat          # Launch unlimited mode
+├── 🤖 models/                   # AI models & embeddings
+│   └── atles_mpnet_finetuned/           # Fine-tuned embedding model
+├── 🧠 memory/                   # Persistent conversation storage
+├── 📚 datasets/                 # Training & learning data
+└── 📋 Configuration files       # Settings & dependencies
+```
 
-### **Backup Models**
+## 🔧 Core System Features
 
-- **Llama3.2:3b** (~2.0 GB) - Lightweight backup for simple tasks
-- **Gemma3:4b** (~3.3 GB) - Alternative backup model
-- **Qwen2:7b** (~4.4 GB) - Previous generation Qwen model
+### **🧠 Intelligent Model Router**
+
+Automatic task-based model selection with pattern recognition:
+
+- **Task Analysis**: Identifies request type (code, conversation, search, etc.)
+- **Model Matching**: Routes to best-performing model for each task
+- **Performance Tracking**: Monitors routing decisions and success rates
+- **Confidence Scoring**: Provides transparency in model selection
+
+**Supported Task Types:**
+- Embedding & Similarity
+- Conversation & Reasoning
+- Code Generation & Analysis
+- Document Analysis
+- Question Answering
+- Vision & Multimodal
+
+### **🤖 Available Models**
+
+#### **qwen2.5** - General Conversation
+- Performance: 0.95 | Resource: High
+- Best for: Conversations, reasoning, text generation
+- Tasks: General chat, Q&A, creative writing
+
+#### **llama3.2** - Lightweight Chat
+- Performance: 0.90 | Resource: Medium
+- Best for: Quick responses, simple queries
+- Tasks: Basic chat, simple questions
+
+#### **qwen2.5-coder** - Code Specialist
+- Performance: 0.93 | Resource: High
+- Best for: Programming tasks
+- Tasks: Code generation, debugging, analysis
+
+#### **llava** - Vision & Multimodal
+- Performance: 0.92 | Resource: High
+- Best for: Image understanding, document analysis
+- Tasks: Vision, OCR, multimodal queries
+
+#### **atles_mpnet_finetuned** - Embeddings
+- Performance: 0.53 (STS-B) | Resource: Low
+- Best for: Semantic search, similarity
+- Tasks: Document search, clustering, embeddings
 
 ### **Intelligent Model Router**
 
@@ -193,20 +177,22 @@ ATLES automatically selects the best model for each task:
 
 **Example Routing:**
 ```
-"Find similar documents" → EmbeddingGemma (95% confidence)
-"What is quantum computing?" → Qwen2.5:7b (90% confidence)  
-"Write a Python function" → Qwen2.5-Coder (98% confidence)
+"Find similar documents" → atles_mpnet_finetuned (95% confidence)
+"What is quantum computing?" → qwen2.5 (90% confidence)  
+"Write a Python function" → qwen2.5-coder (98% confidence)
+"Analyze this image" → llava (92% confidence)
 ```
 
-### **Model Management Features**
+### **🎨 Modern UI Features**
 
-- **Intelligent Selection**: Automatic model choosing based on task complexity
-- **Ollama Integration**: Local model hosting and management via Ollama
-- **Custom Model Support**: Create enhanced ATLES models with constitutional reasoning
-- **Resource Optimization**: Efficient GPU/CPU usage with smart model switching
-- **Configuration Management**: Per-model parameters and system prompts
-
-📚 **See [Qwen Models Guide](docs/guides/QWEN_MODELS_GUIDE.md) for detailed model documentation**
+The new `atles_modern_ui.py` provides:
+- Clean, streamlined chat interface
+- Real-time model switching
+- Intelligent auto-routing option
+- Dark theme with gradient styling
+- Keyboard shortcuts (Ctrl+Enter, Ctrl+N)
+- Memory integration
+- Status indicators
 
 ## 🛠️ Installation & Setup
 

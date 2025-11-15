@@ -1,0 +1,29 @@
+========================================
+RUNPOD SETUP - COPY/PASTE THESE COMMANDS
+========================================
+
+GPU: 1x A6000 48GB ($2+/hr)
+
+STEP 1 - After pod starts, run:
+----------------------------------------
+pip install sentence-transformers datasets transformers torch accelerate huggingface_hub gdown -q && git clone https://github.com/spartan8806/atles.git && cd atles && python finetune_embedding_model.py
+
+
+STEP 2 - If you need Google Drive data:
+----------------------------------------
+cd /workspace && gdown --folder https://drive.google.com/drive/folders/1iHN8EhlDzEoX3vgypFRAIfrYvSnZEU_4 && cd atles
+
+
+MONITOR PROGRESS:
+----------------------------------------
+watch -n 5 nvidia-smi
+
+
+EMERGENCY STOP (if needed):
+----------------------------------------
+pkill -9 python
+
+
+OUTPUT LOCATION:
+----------------------------------------
+/workspace/atles/models/atles_finetuned_embedding
