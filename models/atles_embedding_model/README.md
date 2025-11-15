@@ -1,3 +1,52 @@
+---
+language: en
+license: mit
+library_name: sentence-transformers
+tags:
+- sentence-transformers
+- sentence-similarity
+- feature-extraction
+- generated_from_trainer
+- dataset_size:1000000+
+- loss:MultipleNegativesRankingLoss
+base_model: microsoft/mpnet-base
+metrics:
+- pearson_cosine
+- spearman_cosine
+- pearson_manhattan
+- spearman_manhattan
+- pearson_euclidean
+- spearman_euclidean
+model-index:
+- name: ATLES Embedding Model
+  results:
+  - task:
+      type: semantic-similarity
+      name: Semantic Similarity
+    dataset:
+      name: sts-b
+      type: sts-b
+    metrics:
+    - type: pearson_cosine
+      value: 0.8404
+      name: Pearson Cosine
+    - type: spearman_cosine
+      value: 0.8342
+      name: Spearman Cosine
+widget:
+- source_sentence: "The cat sits on the mat"
+  sentences:
+  - "A feline rests on a rug"
+  - "The dog plays in the park"
+  - "Machine learning is a subset of AI"
+- source_sentence: "How do I install Python?"
+  sentences:
+  - "What are the steps to set up Python?"
+  - "The weather is nice today"
+  - "Installing software packages requires administrator rights"
+pipeline_tag: sentence-similarity
+---
+
 # ATLES Embedding Model
 
 Fine-tuned sentence embedding model achieving **83.73% average correlation** on STS-B benchmark, ranking in the **top 15 globally** and outperforming most commercial embedding APIs.
