@@ -18,7 +18,14 @@ print(f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 # Force CPU to avoid CUDA errors
 print("Loading model on CPU (avoiding CUDA errors)...")
 model = SentenceTransformer("spartan8806/atles", device="cpu")
-print(f"✓ Model loaded on CPU\n")
+
+# Set max sequence length to avoid index errors
+model.max_seq_length = 512  # Safe limit for MPNet
+if hasattr(model, 'tokenizer'):
+    model.tokenizer.model_max_length = 512
+    
+print(f"✓ Model loaded on CPU")
+print(f"  Max sequence length: {model.max_seq_length}\n")
 
 # Start with essential STS tasks (your strength!)
 # These are most important for leaderboard ranking
@@ -40,7 +47,7 @@ print("=" * 80)
 # Get task objects
 task_objects = [mteb.get_task(task_name) for task_name in tasks]
 
-# Run evaluation on CPU
+# Run evaluation on CPU with proper truncation
 results = mteb.evaluate(
     model=model,
     tasks=task_objects,
@@ -49,7 +56,8 @@ results = mteb.evaluate(
     show_progress_bar=True,
     encode_kwargs={
         "batch_size": 8,  # Smaller batch for stability
-        "show_progress_bar": True
+        "show_progress_bar": True,
+        "normalize_embeddings": True,  # Better for similarity
     }
 )
 
